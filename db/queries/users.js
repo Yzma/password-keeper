@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const db = require('../connection');
 
 const getUsers = () => {
@@ -7,4 +9,71 @@ const getUsers = () => {
     });
 };
 
-module.exports = { getUsers };
+/*
+Expecting: {
+  username,
+  email,
+  password
+}
+TODO: Comment and don't return *. Only return the ID
+*/
+const insertUser = (data) => {
+  // BCrypt doesn't support async hasing with promises, so convert it to one.
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(data.password, 12, (err, hash) => {
+      if (err) return reject(err);
+      resolve(hash);
+    });
+  }).then(hash => {
+    return db.query('INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *', [data.username, data.email, hash])
+      .then(data => data.rows);
+  });
+};
+
+const getUserByUsername = (username) => {
+  return db.query('SELECT * FROM users WHERE users.username = $1;', [username])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+// TODO: Come back to this later on once tags are implemented.
+// We need to JOIN the table to actually get the tags names instead of just their IDs.
+const getUsersPasswordsById = (userId) => {
+  return db.query(`SELECT *
+    FROM user_passwords
+    WHERE user_passwords.user_id = $1;`, [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+// TODO: Test this, this was implemented without testing with seed data
+const getUsersOrganizationsById = (userId) => {
+  return db.query(`SELECT organizations.org_name
+    FROM organizations
+    LEFT OUTER JOIN users_organizations
+    ON organizations.id = users_organizations.user_id
+    AND users_organizations.organization_id = organizations.id
+    LEFT OUTER JOIN users
+    ON users_organizations.id = $1;`, [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const getUsersPendingInvitesById = (userId) => {
+  return db.query('SELECT * FROM invites WHERE invites.user_id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+module.exports = {
+  getUsers,
+  insertUser,
+  getUserByUsername,
+  getUsersPasswordsById,
+  getUsersOrganizationsById,
+  getUsersPendingInvitesById
+};
