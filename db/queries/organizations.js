@@ -20,6 +20,9 @@ const insertOrganization = (ownerId, name) => {
 };
 
 // TODO: Better error handling? Since the organization or user might not exist
+// This also needs to be done with SQL commiting since we need to execute multiple queries when adding a user to an organization.
+// 1: Insert the user into the organization
+// 2: Remove the invite row
 const addUser = (userId, organizationId) => {
   return db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [userId, organizationId])
     .then(data => {
@@ -69,6 +72,7 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
 module.exports = {
   getOrganizations,
   insertOrganization,
+  addUser,
   getOrganizationByName,
   getOrganizationsPasswordsById,
   getOrganizationsUsersById,
