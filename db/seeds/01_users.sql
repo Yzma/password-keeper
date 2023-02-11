@@ -1,4 +1,0 @@
--- Users table seeds here (Example)
--- TODO: Implement when we implement encrypting
--- INSERT INTO users (name) VALUES ('Alice');
--- INSERT INTO users (name) VALUES ('Kira');
