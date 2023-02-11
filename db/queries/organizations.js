@@ -26,8 +26,21 @@ const getOrganizationByName = (name) => {
     });
 };
 
+// TODO: Come back to this later on once tags are implemented.
+// We need to JOIN the table to actually get the tags names instead of just their IDs.
+// Returns the Organizations passwords by the Organization ID
+const getOrganizationsPasswordsById = (organizationId) => {
+  return db.query(`SELECT *
+    FROM organization_passwords
+    WHERE organization_passwords.organization_id = $1;`, [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 
 module.exports = {
   getOrganizations,
+  insertOrganization,
   getOrganizationByName
 };
