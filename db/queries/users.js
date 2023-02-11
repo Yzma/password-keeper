@@ -45,6 +45,13 @@ const getUserByUsername = (username) => {
     });
 };
 
+const getUserByEmail = (email) => {
+  return db.query('SELECT * FROM users WHERE users.email = $1;', [email])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 // TODO: Come back to this later on once tags are implemented.
 // We need to JOIN the table to actually get the tags names instead of just their IDs.
 const getUsersPasswordsById = (userId) => {
@@ -78,6 +85,7 @@ const getUsersPendingInvitesById = (userId) => {
 module.exports = {
   getUsers,
   insertUser,
+  getUserByEmail,
   getUserByUsername,
   getUsersPasswordsById,
   getUsersOrganizationsById,
