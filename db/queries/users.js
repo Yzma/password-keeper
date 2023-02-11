@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const db = require('../connection');
 
 const getUsers = () => {
@@ -5,6 +7,27 @@ const getUsers = () => {
     .then(data => {
       return data.rows;
     });
+};
+
+/*
+Expecting: {
+  username,
+  email,
+  password
+}
+TODO: Comment and don't return *. Only return the ID
+*/
+const insertUser = (data) => {
+  // BCrypt doesn't support async hasing with promises, so convert it to one.
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(data.password, 12, (err, hash) => {
+      if (err) return reject(err);
+      resolve(hash);
+    });
+  }).then(hash => {
+    return db.query('INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *', [data.username, data.email, hash])
+      .then(data => data.rows);
+  });
 };
 
 const getUserByUsername = (username) => {
