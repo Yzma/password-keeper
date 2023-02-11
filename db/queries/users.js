@@ -46,9 +46,11 @@ const getUsersOrganizationsById = (userId) => {
 };
 
 const getUsersPendingInvitesById = (userId) => {
-  // TODO: Implement me
+  return db.query('SELECT * FROM invites WHERE invites.user_id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
 };
-
 
 module.exports = {
   getUsers,
