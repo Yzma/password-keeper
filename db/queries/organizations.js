@@ -19,6 +19,14 @@ const insertOrganization = (ownerId, name) => {
     });
 };
 
+// TODO: Better error handling? Since the organization or user might not exist
+const addUser = (userId, organizationId) => {
+  return db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [userId, organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getOrganizationByName = (name) => {
   return db.query('SELECT * FROM organizations WHERE organizations.org_name = $1;', [name])
     .then(data => {
