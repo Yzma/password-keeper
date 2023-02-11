@@ -2,34 +2,71 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <!-- Meta Information -->
+  <title>Main page</title>
 
   <meta charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
+  <!-- External CSS -->
+
+   <!-- App CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-
+  <link rel="stylesheet" href="/public/styles/main.css" />
+  <link rel="stylesheet" href="/public/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- App JS -->
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+
 </head>
-
 <body>
+  <!-- Top navbar (fixed) -->
+<nav>
+  <div class="nav">
+    <a href="#home">My Password</a>
+    <a href="#news">My Orgs</a>
+  </div>
+  <form class="search-bar" action="action_page.php">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </form>
+    <button type="Submit">Create password</button>
+    <button type="Submit">Logout</button>
 
-  <main style="margin: 1em;">
-    <h3> PASSWORD MANAGER</h3>
-    <h3>New to password manager?</h3>
-    <h3>LOGIN HERE:</h3>
-<form method="POST" action="/login" name="login" type="login">
-  <label for="email">Email:</label>
-  <input id="email" type="email" name="username" placeholder="email">
-  <label for="password">Password:</label>
-  <input id="password" type="password" name="password" placeholder="password">
-  <button type="Submit">Login</button>
-</form>
+    <div class="picture">
+      <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
+    </div>
+  </nav>
+
+<!-- <div class="content"> -->
+<main>
+  <div class="article-list">
+    <a class="article-box" href="example.com">
+        <img class="article-image" alt="" width="150" height="150" />
+        <div class="article-box-text">
+          <p>Example statement</p>
+        </div>
+      </a>
+    </div>
+    <div class="article-list">
+      <a class="article-box" href="example.com">
+          <img class="article-image" alt="" width="150" height="150" />
+          <div class="article-box-text">
+            <p>Example statement</p>
+          </div>
+        </a>
+      </div><div class="article-list">
+        <a class="article-box" href="example.com">
+            <img class="article-image" alt="" width="150" height="150" />
+            <div class="article-box-text">
+              <p>Example statement</p>
+            </div>
+          </a>
+        </div>
 </main>
   <h1>Have fun! 🥔</h1>
 </body>
