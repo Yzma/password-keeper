@@ -52,11 +52,9 @@ const getUsersPasswordsById = (userId) => {
 const getUsersOrganizationsById = (userId) => {
   return db.query(`SELECT organizations.org_name
     FROM organizations
-    LEFT OUTER JOIN users_organizations
-    ON organizations.id = users_organizations.user_id
-    AND users_organizations.organization_id = organizations.id
-    LEFT OUTER JOIN users
-    ON users_organizations.id = $1;`, [userId])
+    JOIN users_organizations ON users_organizations.organization_id = organizations.id
+    JOIN users ON users.id = users_organizations.user_id
+    WHERE users.id = $1;`, [userId])
     .then(data => {
       return data.rows;
     });
