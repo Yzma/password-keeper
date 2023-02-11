@@ -7,7 +7,8 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.send();
+  res.session.id = null;
+  res.redirect('/');
 });
 
 // Debug route - Quickly get user information depending on the users cookie
