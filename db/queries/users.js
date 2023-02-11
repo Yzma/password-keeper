@@ -41,8 +41,18 @@ const getUsersPasswordsById = (userId) => {
   // TODO: Implement me
 };
 
+// TODO: Test this, this was implemented without testing with seed data
 const getUsersOrganizationsById = (userId) => {
-  // TODO: Implement me
+  return db.query(`SELECT organizations.org_name
+    FROM organizations
+    LEFT OUTER JOIN users_organizations
+    ON organizations.id = users_organizations.user_id
+    AND users_organizations.organization_id = organizations.id
+    LEFT OUTER JOIN users
+    ON users_organizations.id = $1;`, [userId])
+    .then(data => {
+      return data.rows;
+    });
 };
 
 const getUsersPendingInvitesById = (userId) => {
