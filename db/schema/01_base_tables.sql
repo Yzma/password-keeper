@@ -48,7 +48,7 @@ CREATE TABLE organization_passwords (
 
 CREATE TABLE invites (
   id SERIAL PRIMARY KEY NOT NULL,
-  created_at DATE NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE NOT NULL
 );
