@@ -17,6 +17,13 @@ const _getMyInfo = (userId) => {
     });
 };
 
+const getUserById = (userId) => {
+  return db.query('SELECT username, email FROM users WHERE users.id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 /*
 Expecting: {
   username,
@@ -84,6 +91,7 @@ const getUsersPendingInvitesById = (userId) => {
 
 module.exports = {
   getUsers,
+  getUserById,
   insertUser,
   getUserByEmail,
   getUserByUsername,
