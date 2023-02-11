@@ -16,6 +16,7 @@ CREATE TABLE users (
 
 CREATE TABLE organizations (
   id SERIAL PRIMARY KEY NOT NULL,
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   org_name VARCHAR(255) NOT NULL
 );
 
