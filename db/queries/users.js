@@ -37,8 +37,15 @@ const getUserByUsername = (username) => {
     });
 };
 
+// TODO: Come back to this later on once tags are implemented.
+// We need to JOIN the table to actually get the tags names instead of just their IDs.
 const getUsersPasswordsById = (userId) => {
-  // TODO: Implement me
+  return db.query(`SELECT *
+    FROM user_passwords
+    WHERE user_passwords.user_id = $1;`, [userId])
+    .then(data => {
+      return data.rows;
+    });
 };
 
 // TODO: Test this, this was implemented without testing with seed data
