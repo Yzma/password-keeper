@@ -9,6 +9,14 @@ const getUsers = () => {
     });
 };
 
+// TODO: Don't use. This will be removed later on. For now it's only used in the /auth/me route to get debug info.
+const _getMyInfo = (userId) => {
+  return db.query('SELECT * FROM users WHERE users.id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 /*
 Expecting: {
   username,
