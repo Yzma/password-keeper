@@ -50,4 +50,11 @@ const getUsersPendingInvitesById = (userId) => {
 };
 
 
-module.exports = { getUsers };
+module.exports = {
+  getUsers,
+  insertUser,
+  getUserByUsername,
+  getUsersPasswordsById,
+  getUsersOrganizationsById,
+  getUsersPendingInvitesById
+};
