@@ -20,12 +20,20 @@ router.post("/login", (req, res) => {
   return users.getUserByEmail(email)
     .then(result => result[0]) // TODO: Change this so the result isn't an array of rows
     .then(user => {
-      if (bcrypt.compare(password, user.password)) {
-        req.session.userID = user.id;
-        return res.redirect('/urls');
-      }
 
-      return res.json({ error: 'Invalid credentials' });
+      return bcrypt.compare(password, user.password, (err, result) => {
+        if (err) {
+          return res.json({ error: 'Error validating user' });
+        }
+
+        if (!result) {
+          return res.json({ error: 'Invalid credentials' });
+        }
+
+        req.session.userID = user.id;
+        return res.redirect('/');
+      });
+
     }).catch((err) => {
       console.log('Error logging in: ', err);
       return res.send('Invalid login');
