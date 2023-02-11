@@ -38,6 +38,13 @@ const getOrganizationsPasswordsById = (organizationId) => {
     });
 };
 
+const getOrganizationsPendingInvitesById = (organizationId) => {
+  return db.query('SELECT * FROM invites WHERE invites.organization_id = $1;', [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 
 module.exports = {
   getOrganizations,
