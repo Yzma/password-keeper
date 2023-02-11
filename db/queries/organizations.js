@@ -38,6 +38,18 @@ const getOrganizationsPasswordsById = (organizationId) => {
     });
 };
 
+// TODO: Test this, this was implemented without testing with seed data
+const getOrganizationsUsersById = (organizationId) => {
+  return db.query(`SELECT users.id, users.username, users.email
+    FROM users
+    JOIN users_organizations ON users_organizations.user_id = users.id
+    JOIN organizations ON organizations.id = users_organizations.organization_id
+    WHERE organizations.id = $1;`, [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getOrganizationsPendingInvitesById = (organizationId) => {
   return db.query('SELECT * FROM invites WHERE invites.organization_id = $1;', [organizationId])
     .then(data => {
@@ -49,5 +61,8 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
 module.exports = {
   getOrganizations,
   insertOrganization,
-  getOrganizationByName
+  getOrganizationByName,
+  getOrganizationsPasswordsById,
+  getOrganizationsUsersById,
+  getOrganizationsPendingInvitesById
 };
