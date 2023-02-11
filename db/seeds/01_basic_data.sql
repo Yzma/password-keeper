@@ -26,4 +26,4 @@ INSERT INTO organization_passwords(password, organization_id, tag_id) VALUES('or
 INSERT INTO organization_passwords(password, organization_id, tag_id) VALUES('org-test-password2', 1, 3);
 
 -- Invites
-INSERT INTO invites(created_at, user_id, organization_id) VALUES(NOW(), 4, 1);
+INSERT INTO invites(user_id, organization_id) VALUES(4, 1);
