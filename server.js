@@ -38,10 +38,12 @@ app.use(express.static('public'));
 const userApiRoutes = require('./routes/users-api');
 const usersRoutes = require('./routes/users');
 const authRoute = require('./routes/auth');
+const organizationsRoute = require('./routes/organizations/index');
 
 app.use('/api/users', userApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/auth', authRoute);
+app.use('/organizations', organizationsRoute);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
