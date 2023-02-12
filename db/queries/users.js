@@ -18,7 +18,7 @@ const _getMyInfo = (userId) => {
 };
 
 const getUserById = (userId) => {
-  return db.query('SELECT username, email FROM users WHERE users.id = $1;', [userId])
+  return db.query('SELECT id, username, email FROM users WHERE users.id = $1;', [userId])
     .then(data => {
       return data.rows;
     });
