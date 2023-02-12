@@ -34,6 +34,8 @@ CREATE TABLE tags (
 
 CREATE TABLE user_passwords (
   id SERIAL PRIMARY KEY NOT NULL,
+  website_name VARCHAR(255),
+  username VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   tag_id INTEGER REFERENCES tags(id) ON DELETE CASCADE
@@ -41,6 +43,8 @@ CREATE TABLE user_passwords (
 
 CREATE TABLE organization_passwords (
   id SERIAL PRIMARY KEY NOT NULL,
+  website_name VARCHAR(255),
+  username VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE,
   tag_id INTEGER REFERENCES tags(id) ON DELETE CASCADE
