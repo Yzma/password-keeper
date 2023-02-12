@@ -18,12 +18,12 @@ INSERT INTO tags(name) VALUES('Entertainment');
 INSERT INTO tags(name) VALUES('Social');
 
 -- User Passwords
-INSERT INTO user_passwords(password, user_id, tag_id) VALUES('test-password', 1, 1);
-INSERT INTO user_passwords(password, user_id, tag_id) VALUES('test-password2', 1, 1);
+INSERT INTO user_passwords(website_name, username, password, user_id, tag_id) VALUES('user website 1', 'user username 1', 'test-password', 1, 1);
+INSERT INTO user_passwords(website_name, username, password, user_id, tag_id) VALUES('user website 1', 'user username 1', 'test-password2', 1, 1);
 
 -- Org Passwords
-INSERT INTO organization_passwords(password, organization_id, tag_id) VALUES('org-test-password', 1, 3);
-INSERT INTO organization_passwords(password, organization_id, tag_id) VALUES('org-test-password2', 1, 3);
+INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES('org website 1', 'org username 1', 'org-test-password', 1, 3);
+INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES('org website 1', 'org username 1', 'org-test-password2', 1, 3);
 
 -- Invites
 INSERT INTO invites(user_id, organization_id) VALUES(4, 1);
