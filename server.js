@@ -52,6 +52,11 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// TODO: Create 404.ejs to display
+app.use((req, res) => {
+  return res.status(404).send('404');
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
