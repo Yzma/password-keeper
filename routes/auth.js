@@ -47,7 +47,7 @@ router.post('/logout', (req, res) => {
 
 // Debug route - Quickly get user information depending on the users cookie
 router.get('/me', (req, res) => {
-  const userId = req.session.id;
+  const userId = req.session.userId;
   if (!userId) {
     return res.send('You are not logged in.');
   }
