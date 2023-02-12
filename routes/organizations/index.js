@@ -28,6 +28,9 @@ router.post('/', (req, res) => {
   return organizationsHelper.insertOrganization(userId, orgName)
     .then(result => {
       return res.json(result);
+    })
+    .catch(err => { // TODO: Change this so we don't give the DB error
+      return res.json({ error: err.detail });
     });
 });
 
