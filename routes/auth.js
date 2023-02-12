@@ -30,8 +30,8 @@ router.post("/login", (req, res) => {
           return res.json({ error: 'Invalid credentials' });
         }
 
-        req.session.userID = user.id;
-        return res.redirect('/');
+        req.session.userId = user.id;
+        return res.redirect('/users');
       });
 
     }).catch((err) => {
@@ -41,8 +41,8 @@ router.post("/login", (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.session.id = null;
-  res.redirect('/');
+  req.session.userId = null;
+  return res.redirect('/users/login');
 });
 
 // Debug route - Quickly get user information depending on the users cookie
