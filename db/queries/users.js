@@ -91,6 +91,7 @@ const getUsersPendingInvitesById = (userId) => {
 
 module.exports = {
   getUsers,
+  _getMyInfo,
   getUserById,
   insertUser,
   getUserByEmail,
