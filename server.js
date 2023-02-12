@@ -39,9 +39,12 @@ app.use(express.static('public'));
 
 const indexRoute = require('./routes/index');
 const authRoute = require('./routes/auth');
+const organizationsRoute = require('./routes/organizations/index');
 
 app.use('/', indexRoute);
 app.use('/auth', authRoute);
+app.use('/organizations', organizationsRoute);
+// Note: mount other resources here, using the same pattern above
 
 // TODO: Create 404.ejs to display
 app.use((req, res) => {
