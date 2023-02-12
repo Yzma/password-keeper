@@ -1,0 +1,27 @@
+nav {
+  display: flex;
+  justify-content: flex-start;
+   height: 160px;
+   width: 100%;
+   background: #068d70;
+   color: #ffffff;
+   padding: 0 1.5em;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   position: fixed;
+   top: 0;
+   transition: top 0.3s;
+}
+
+.logo {
+  margin-bottom: 50px;
+  transform: scale(0.9);
+}
+
+
+#container {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
