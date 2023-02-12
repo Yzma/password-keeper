@@ -1,24 +1,45 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
-
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <title>Index</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/public/styles/main.css" />
+  <link rel="stylesheet" href="/public/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+
 </head>
-
 <body>
-  <h1>Have fun! 🥔</h1>
+  <nav>
+    <div class="nav">
+      <a href="#home">My Password</a>
+      <a href="#news">My Orgs</a>
+    </div>
+    <form class="search-bar" action="action_page.php">
+      <input type="text" placeholder="Search.." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <form class="create password" action="/users/new_password" name="create password" type="create password">
+      <button type="Submit">Create password</button>
+    </form>
+    <form class="logout" action="/users/login" name="logout" type="logout">
+      <button type="Submit">Logout</button>
+    </form>
+    <div class="picture">
+      <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
+    </div>
+  </nav>
+  <main>
+    <h1>Have fun! 🥔</h1>
+  </main>
 </body>
-
-</html>
+</html> -->

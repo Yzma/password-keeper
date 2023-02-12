@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Login</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+
+
+</head>
+
+<body>
+  <div class="logo">
+    <img src="\images\PASSWORD-KEEPER_free-file.png" />
+  </div>
+
+  <h3>New to password manager?</h3>
+
+  <main style="margin: 1em;">
+    <h3>Register</h3>
+    <form method="POST" action="/users/register">
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="email" placeholder="email">
+      <label for="password">Password:</label>
+      <input id="password" type="password" name="password" placeholder="password">
+      <button type="submit">Submit</button>
+    </form>
+
+
+    <h3>Login here:</h3>
+    <form method="POST" action="/users/login" name="login" type="login">
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="username" placeholder="email">
+      <label for="password">Password:</label>
+      <input id="password" type="password" name="password" placeholder="password">
+      <button type="Submit">Login</button>
+    </form>
+  </main>
+  <h1>Have fun! 🥔</h1>
+</body>
+
+</html>
