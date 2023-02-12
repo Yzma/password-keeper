@@ -2,13 +2,18 @@
 const express = require('express');
 const router  = express.Router();
 
+const organizationsHelper = require('../../db/queries/organizations');
+
 const invites = require('./invites');
 const passwords = require('./passwords');
 const tags = require('./tags');
 const users = require('./users');
 
 router.get("/", (req, res) => {
-  res.send('/organizations');
+  return organizationsHelper.getOrganizations()
+    .then(result => {
+      return res.json(result);
+    });
 });
 
 // TODO: POST / - Creates a new organization
