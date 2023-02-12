@@ -6,6 +6,7 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const cookieSession = require('cookie-session');
 
 const PORT = process.env.PORT || 8080;
@@ -25,6 +26,7 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(helmet());
 app.use(
   '/styles',
   sassMiddleware({
