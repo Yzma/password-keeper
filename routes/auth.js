@@ -5,6 +5,8 @@ const router  = express.Router();
 const users = require('../db/queries/users');
 const bcrypt = require('bcryptjs');
 
+const authMiddleware = require('../lib/auth-middleware');
+
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -58,6 +60,11 @@ router.get('/me', (req, res) => {
       console.log('Error fetching my info: ', err);
       return res.send('Error fetching user data. Check console for error.');
     });
+});
+
+router.get("/testmiddleware", [authMiddleware()], async(req, res) => {
+  console.log('testing middle', req.user);
+  return res.json({ response: req.user });
 });
 
 module.exports = router;
