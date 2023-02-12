@@ -18,12 +18,22 @@ router.get("/", (req, res) => {
 
 // TODO: POST / - Creates a new organization
 router.post('/', (req, res) => {
-  res.send();
+  const { orgName } = req.body;
+  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+
+  if (!userId || !orgName) {
+    return res.json({ error: `Invalid userId(${userId}) or orgName(${orgName})` });
+  }
+
+  return organizationsHelper.insertOrganization(userId, orgName)
+    .then(result => {
+      return res.json(result);
+    });
 });
 
 // TODO: UPDATE /{org_id} - Updates information about the organization
 router.patch('/:org_id', (req, res) => {
-  res.send();
+  return res.send('Should UPDATE /organizations/{org_id}/');
 });
 
 router.use('/:org_id/invites', invites);
