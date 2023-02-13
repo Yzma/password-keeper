@@ -1,19 +1,19 @@
 const express = require('express');
 const router  = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/:orgId/passwords", (req, res) => {
   return res.send('Should GET /organizations/{org_id}/passwords');
 });
 
-router.post('/', (req, res) => {
+router.post('/:orgId/passwords', (req, res) => {
   return res.send('Should POST /organizations/{org_id}/passwords');
 });
 
-router.delete('/', (req, res) => {
+router.delete('/:orgId/passwords', (req, res) => {
   return res.send('Should DELETE /organizations/{org_id}/passwords');
 });
 
-router.patch('/', (req, res) => {
+router.patch('/:orgId/passwords', (req, res) => {
   return res.send('Should UPDATE /organizations/{org_id}/passwords');
 });
 

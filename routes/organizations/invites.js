@@ -1,15 +1,15 @@
 const express = require('express');
 const router  = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/:orgId/invites", (req, res) => {
   return res.send('Should GET /organizations/{org_id}/invites');
 });
 
-router.post('/', (req, res) => {
+router.post('/:orgId/invites', (req, res) => {
   return res.send('Should POST /organizations/{org_id}/invites');
 });
 
-router.delete('/', (req, res) => {
+router.delete('/:orgId/invites', (req, res) => {
   return res.send('Should DELETE /organizations/{org_id}/invites');
 });
 
