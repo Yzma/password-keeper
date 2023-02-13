@@ -40,7 +40,7 @@ const insertUser = (data) => {
       resolve(hash);
     });
   }).then(hash => {
-    return db.query('INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *', [data.username, data.email, hash])
+    return db.query('INSERT INTO users(email, password) VALUES($1, $2) RETURNING *', [data.email, hash])
       .then(data => data.rows);
   });
 };
