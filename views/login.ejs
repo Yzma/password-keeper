@@ -24,14 +24,11 @@
 </head>
 
 <body>
-  <%- include('partials/_header') %>
   <header></header>
   <div class="logo">
     <img src="\images\PASSWORD-KEEPER_free-file.png" />
   </div>
-
   <h3>New to password manager?</h3>
-
   <main style="margin: 1em;">
     <h3>Register</h3>
     <form method="POST" action="/auth/register">
@@ -41,8 +38,6 @@
       <input id="password" type="password" name="password" placeholder="password">
       <button type="submit">Submit</button>
     </form>
-
-
     <h3>Login here:</h3>
     <form method="POST" action="/auth/login" name="login" type="login">
       <label for="email">Email:</label>
