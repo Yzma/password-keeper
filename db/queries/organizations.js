@@ -13,9 +13,14 @@ const getOrganizations = () => {
 // 2: Insert into the users_organizations table
 // Since we have to insert multiple times, implement 'COMMIT' so we can rollback the table if something goes wrong
 const insertOrganization = (ownerId, name) => {
-  return db.query('INSERT INTO organizations(owner_id, org_name) VALUES($1, $2) RETURNING *', [ownerId, name])
-    .then(data => {
-      return data.rows;
+  return db.query('BEGIN')
+    .then(result => db.query('INSERT INTO organizations(owner_id, org_name) VALUES($1, $2) RETURNING *', [ownerId, name])
+      .then(result => {
+        return db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [ownerId, result.rows[0].id]);
+      })).then(rows => db.query('COMMIT'))
+    .catch(err => {
+      console.error('insertOrganization error: ', err);
+      return db.query('ROLLBACK');
     });
 };
 
