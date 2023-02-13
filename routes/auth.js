@@ -43,11 +43,10 @@ router.post("/login", (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  const { username, email, password } = req.body;
-  console.log(username);
+  const { email, password } = req.body;
   console.log(email);
   console.log(password);
-  return users.insertUser({ username, email, password })
+  return users.insertUser({ email, password })
     .then(result => result[0]) // TODO: Change this so the result isn't an array of rows
     .then(user => {
 
