@@ -22,8 +22,7 @@ router.post("/login", (req, res) => {
   res.sendStatus(200);
 });
 
-router.post("/register", (req, res) => {
-  console.log("Got body:", req.body);
+router.post("/register", (req, res) => { 
   res.sendStatus(200);
 });
 

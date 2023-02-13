@@ -18,13 +18,16 @@
   <link rel="stylesheet" href="/public/styles/layout.css" />
   <link rel="stylesheet" href="/styles/nav.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <!-- App JS -->
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/users.js"></script>
 </head>
 
 <body>
+  <%- include('partials/_header') %>
   <!-- Top navbar (fixed) -->
+  <header>
   <nav>
     <div class="nav">
       <a href="#home">My Password</a>
@@ -44,7 +47,7 @@
       <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
     </div>
   </nav>
-
+</header>
   <!-- <div class="content"> -->
   <main>
     <div id="restrictedVaultContent" class="absolute"></div>
