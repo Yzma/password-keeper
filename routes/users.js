@@ -8,15 +8,12 @@
 const express = require("express");
 const router = express.Router();
 
-
-
 router.get("/", (req, res) => {
   const templateVars = {
     user: null
-  }
-  return res.render("user", templateVars)
+  };
+  return res.render("users", templateVars);
 });
-
 
 router.get("/login", (req, res) => {
   res.render("login");
@@ -28,7 +25,7 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-
+  console.log("Got body:", req.body);
   res.sendStatus(200);
 });
 

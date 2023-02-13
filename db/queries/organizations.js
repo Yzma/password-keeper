@@ -11,11 +11,16 @@ const getOrganizations = () => {
 // TODO: We have to do multiple queries here:
 // 1: Insert into the organizations tables
 // 2: Insert into the users_organizations table
-// Since we have to insert multiple times, implement 'COMMIT' so we can rollback the table if something goes wrong
+// TODO: Return something other than the commands COMMIT or ROLLBACK data
 const insertOrganization = (ownerId, name) => {
-  return db.query('INSERT INTO organizations(owner_id, org_name) VALUES($1, $2) RETURNING *', [ownerId, name])
-    .then(data => {
-      return data.rows;
+  return db.query('BEGIN')
+    .then(result => db.query('INSERT INTO organizations(owner_id, org_name) VALUES($1, $2) RETURNING *', [ownerId, name])
+      .then(result => {
+        return db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [ownerId, result.rows[0].id]);
+      })).then(rows => db.query('COMMIT'))
+    .catch(err => {
+      console.error('insertOrganization error: ', err);
+      return db.query('ROLLBACK');
     });
 };
 
@@ -23,10 +28,16 @@ const insertOrganization = (ownerId, name) => {
 // This also needs to be done with SQL commiting since we need to execute multiple queries when adding a user to an organization.
 // 1: Insert the user into the organization
 // 2: Remove the invite row
+// TODO: Return something other than the commands COMMIT or ROLLBACK data
 const addUser = (userId, organizationId) => {
-  return db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [userId, organizationId])
-    .then(data => {
-      return data.rows;
+  return db.query('BEGIN')
+    .then(result => db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [userId, organizationId])
+      .then(result => {
+        return db.query('DELETE FROM invites WHERE user_id = $1 AND organization_id = $2', [userId, organizationId]);
+      })).then(rows => db.query('COMMIT'))
+    .catch(err => {
+      console.error('addUser error: ', err);
+      return db.query('ROLLBACK');
     });
 };
 
