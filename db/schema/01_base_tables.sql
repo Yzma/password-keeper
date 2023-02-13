@@ -31,7 +31,7 @@ CREATE TABLE users_organizations (
 
 CREATE TABLE user_password_tags (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) NOT NULL,
   name VARCHAR(255) NOT NULL
 );
 
@@ -41,12 +41,12 @@ CREATE TABLE user_passwords (
   username VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  tag_id INTEGER REFERENCES user_password_tags(id) ON DELETE CASCADE
+  tag_id INTEGER REFERENCES user_password_tags(id) ON DELETE SET NULL
 );
 
 CREATE TABLE organization_password_tags (
   id SERIAL PRIMARY KEY NOT NULL,
-  organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE,
+  organization_id INTEGER REFERENCES organizations(id) NOT NULL,
   name VARCHAR(255) NOT NULL
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE organization_passwords (
   username VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE,
-  tag_id INTEGER REFERENCES organization_password_tags(id) ON DELETE CASCADE
+  tag_id INTEGER REFERENCES organization_password_tags(id) ON DELETE SET NULL
 );
 
 CREATE TABLE invites (
