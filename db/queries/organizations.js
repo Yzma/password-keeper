@@ -107,6 +107,27 @@ const getAllOrganizationTags = (organizationId) => {
     });
 };
 
+const createOrganizationTag = (organizationId, name) => {
+  return db.query('INSERT INTO organization_password_tags(organization_id, name) VALUES($1, $2) RETURNING *', [organizationId, name])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteOrganizationTagByName = (organizationId, name) => {
+  return db.query('DELETE FROM organization_password_tags WHERE organization_id = $1 AND name = $2 RETURNING *', [organizationId, name])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteOrganizationTagById = (organizationId, tagId) => {
+  return db.query('DELETE FROM organization_password_tags WHERE organization_id = $1 AND id = $2 RETURNING *', [organizationId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const inviteUser = (organizationId, userId) => {
   return db.query('INSERT INTO invites(user_id, organizationId) VALUES($1, $2) RETURNING *', [userId, organizationId])
     .then(data => {
@@ -136,6 +157,10 @@ module.exports = {
   getOrganizationByName,
   getOrganizationsPasswordsById,
   insertPassword,
+  getAllOrganizationTags,
+  createOrganizationTag,
+  deleteOrganizationTagByName,
+  deleteOrganizationTagById,
   getOrganizationsUsersById,
   inviteUser,
   deleteInvite,
