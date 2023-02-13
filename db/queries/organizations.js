@@ -72,13 +72,26 @@ const getOrganizationsUsersById = (organizationId) => {
     });
 };
 
+const inviteUser = (organizationId, userId) => {
+  return db.query('INSERT INTO invites(user_id, organizationId) VALUES($1, $2) RETURNING *', [userId, organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteInvite = (organizationId, inviteId) => {
+  return db.query('DELETE FROM invites WHERE organization_id = $1 AND invites.id = $2 RETURNING *', [organizationId, inviteId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getOrganizationsPendingInvitesById = (organizationId) => {
   return db.query('SELECT * FROM invites WHERE invites.organization_id = $1;', [organizationId])
     .then(data => {
       return data.rows;
     });
 };
-
 
 module.exports = {
   getOrganizations,
@@ -87,5 +100,7 @@ module.exports = {
   getOrganizationByName,
   getOrganizationsPasswordsById,
   getOrganizationsUsersById,
+  inviteUser,
+  deleteInvite,
   getOrganizationsPendingInvitesById
 };
