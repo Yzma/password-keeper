@@ -38,11 +38,9 @@ app.use(
 app.use(express.static('public'));
 
 const indexRoute = require('./routes/index');
-const usersRoutes = require('./routes/users');
 const authRoute = require('./routes/auth');
 
 app.use('/', indexRoute);
-app.use('/users', usersRoutes);
 app.use('/auth', authRoute);
 
 // TODO: Create 404.ejs to display
