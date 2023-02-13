@@ -62,7 +62,7 @@ const getOrganizationsPasswordsById = (organizationId) => {
 
 // TODO: Test this, this was implemented without testing with seed data
 const getOrganizationsUsersById = (organizationId) => {
-  return db.query(`SELECT users.id, users.username, users.email
+  return db.query(`SELECT users.id, users.email
     FROM users
     JOIN users_organizations ON users_organizations.user_id = users.id
     JOIN organizations ON organizations.id = users_organizations.organization_id
