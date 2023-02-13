@@ -36,12 +36,12 @@ router.post('/', (req, res) => {
 
 // TODO: UPDATE /{org_id} - Updates information about the organization
 router.patch('/:org_id', (req, res) => {
-  return res.send('Should UPDATE /organizations/{org_id}/');
+  return res.send('Should UPDATE /organizations/{orgId}/');
 });
 
-router.use('/:org_id/invites', invites);
-router.use('/:org_id/passwords', passwords);
-router.use('/:org_id/tags', tags);
-router.use('/:org_id/users', users);
+router.use('/:orgId/invites', invites);
+router.use('/:orgId/passwords', passwords);
+router.use('/:orgId/tags', tags);
+router.use('/:orgId/users', users);
 
 module.exports = router;
