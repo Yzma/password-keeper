@@ -41,6 +41,13 @@ const addUser = (userId, organizationId) => {
     });
 };
 
+const removeUser = (userId, organizationId) => {
+  return db.query('DELETE FROM users_organizations WHERE organization_id = $1 AND user_id = $2 RETURNING *;', [organizationId, userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getOrganizationByName = (name) => {
   return db.query('SELECT * FROM organizations WHERE organizations.org_name = $1;', [name])
     .then(data => {
@@ -62,11 +69,25 @@ const getOrganizationsPasswordsById = (organizationId) => {
 
 // TODO: Test this, this was implemented without testing with seed data
 const getOrganizationsUsersById = (organizationId) => {
-  return db.query(`SELECT users.id, users.username, users.email
+  return db.query(`SELECT users.id, users.email
     FROM users
     JOIN users_organizations ON users_organizations.user_id = users.id
     JOIN organizations ON organizations.id = users_organizations.organization_id
     WHERE organizations.id = $1;`, [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const inviteUser = (organizationId, userId) => {
+  return db.query('INSERT INTO invites(user_id, organizationId) VALUES($1, $2) RETURNING *', [userId, organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteInvite = (organizationId, inviteId) => {
+  return db.query('DELETE FROM invites WHERE organization_id = $1 AND invites.id = $2 RETURNING *', [organizationId, inviteId])
     .then(data => {
       return data.rows;
     });
@@ -79,13 +100,15 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
     });
 };
 
-
 module.exports = {
   getOrganizations,
   insertOrganization,
   addUser,
+  removeUser,
   getOrganizationByName,
   getOrganizationsPasswordsById,
   getOrganizationsUsersById,
+  inviteUser,
+  deleteInvite,
   getOrganizationsPendingInvitesById
 };

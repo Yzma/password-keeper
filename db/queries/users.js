@@ -18,7 +18,7 @@ const _getMyInfo = (userId) => {
 };
 
 const getUserById = (userId) => {
-  return db.query('SELECT id, username, email FROM users WHERE users.id = $1;', [userId])
+  return db.query('SELECT id, email FROM users WHERE users.id = $1;', [userId])
     .then(data => {
       return data.rows;
     });
@@ -26,7 +26,6 @@ const getUserById = (userId) => {
 
 /*
 Expecting: {
-  username,
   email,
   password
 }
@@ -40,16 +39,9 @@ const insertUser = (data) => {
       resolve(hash);
     });
   }).then(hash => {
-    return db.query('INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *', [data.username, data.email, hash])
+    return db.query('INSERT INTO users(email, password) VALUES($1, $2) RETURNING *', [data.email, hash])
       .then(data => data.rows);
   });
-};
-
-const getUserByUsername = (username) => {
-  return db.query('SELECT * FROM users WHERE users.username = $1;', [username])
-    .then(data => {
-      return data.rows;
-    });
 };
 
 const getUserByEmail = (email) => {
@@ -95,7 +87,6 @@ module.exports = {
   getUserById,
   insertUser,
   getUserByEmail,
-  getUserByUsername,
   getUsersPasswordsById,
   getUsersOrganizationsById,
   getUsersPendingInvitesById

@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS invites CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  username VARCHAR(50) UNIQUE NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL
 );
@@ -18,13 +17,15 @@ CREATE TABLE users (
 CREATE TABLE organizations (
   id SERIAL PRIMARY KEY NOT NULL,
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  org_name VARCHAR(255) NOT NULL
+  org_name VARCHAR(255) NOT NULL,
+  UNIQUE (owner_id, org_name)
 );
 
 CREATE TABLE users_organizations (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE NOT NULL
+  organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE NOT NULL,
+  UNIQUE (user_id, organization_id)
 );
 
 CREATE TABLE tags (
@@ -54,5 +55,6 @@ CREATE TABLE invites (
   id SERIAL PRIMARY KEY NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-  organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE NOT NULL
+  organization_id INTEGER REFERENCES organizations(id) ON DELETE CASCADE NOT NULL,
+  UNIQUE (user_id, organization_id)
 );

@@ -1,10 +1,10 @@
 
 -- Insert Users
-INSERT INTO users(username, email, password) VALUES('Username 1', 'tristanjacobs@gmail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 2', 'allisonjackson@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 3', 'asherpoole@gmx.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 4', 'michaelgray@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 5', 'ariaatkinson@outlook.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('tristanjacobs@gmail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('allisonjackson@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('asherpoole@gmx.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('michaelgray@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('ariaatkinson@outlook.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
 
 -- Insert Organizations
 INSERT INTO organizations(owner_id, org_name) VALUES(1, 'Username 1s Org 1');
@@ -16,6 +16,11 @@ INSERT INTO tags(name) VALUES('Finance');
 INSERT INTO tags(name) VALUES('Gaming');
 INSERT INTO tags(name) VALUES('Entertainment');
 INSERT INTO tags(name) VALUES('Social');
+
+-- Insert some users into Organization 1
+INSERT INTO users_organizations(user_id, organization_id) VALUES(1, 1);
+INSERT INTO users_organizations(user_id, organization_id) VALUES(2, 1);
+INSERT INTO users_organizations(user_id, organization_id) VALUES(3, 1);
 
 -- User Passwords
 INSERT INTO user_passwords(website_name, username, password, user_id, tag_id) VALUES('user website 1', 'user username 1', 'test-password', 1, 1);
