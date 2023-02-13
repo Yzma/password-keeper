@@ -16,7 +16,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  const templateVars = {
+    user: null
+  };
+  res.render("login", templateVars);
 });
 
 router.post("/login", (req, res) => {
@@ -32,7 +35,10 @@ router.post("/register", (req, res) => {
 
 // get to create a new password
 router.get("/new_password", (req, res) => {
-  res.render("new_password");
+  const templateVars = {
+    user: null
+  };
+  res.render("new_password", templateVars);
 });
 // post to create a new password
 router.post("/new_password", (req, res) => {
