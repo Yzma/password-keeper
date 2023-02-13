@@ -24,6 +24,8 @@
 </head>
 
 <body>
+  <%- include('partials/_header') %>
+  <header></header>
   <div class="logo">
     <img src="\images\PASSWORD-KEEPER_free-file.png" />
   </div>
@@ -32,7 +34,7 @@
 
   <main style="margin: 1em;">
     <h3>Register</h3>
-    <form method="POST" action="/auth/register">
+    <form method="POST" action="/users/register">
       <label for="email">Email:</label>
       <input id="email" type="email" name="email" placeholder="email">
       <label for="password">Password:</label>

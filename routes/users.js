@@ -15,7 +15,6 @@ router.get("/", (req, res) => {
   return res.render("users", templateVars);
 });
 
-
 router.get("/login", (req, res) => {
   res.render("login");
 });
