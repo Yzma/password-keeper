@@ -9,6 +9,21 @@ const getUsers = () => {
     });
 };
 
+// TODO: Don't use. This will be removed later on. For now it's only used in the /auth/me route to get debug info.
+const _getMyInfo = (userId) => {
+  return db.query('SELECT * FROM users WHERE users.id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const getUserById = (userId) => {
+  return db.query('SELECT id, username, email FROM users WHERE users.id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 /*
 Expecting: {
   username,
@@ -32,6 +47,13 @@ const insertUser = (data) => {
 
 const getUserByUsername = (username) => {
   return db.query('SELECT * FROM users WHERE users.username = $1;', [username])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const getUserByEmail = (email) => {
+  return db.query('SELECT * FROM users WHERE users.email = $1;', [email])
     .then(data => {
       return data.rows;
     });
@@ -69,7 +91,10 @@ const getUsersPendingInvitesById = (userId) => {
 
 module.exports = {
   getUsers,
+  _getMyInfo,
+  getUserById,
   insertUser,
+  getUserByEmail,
   getUserByUsername,
   getUsersPasswordsById,
   getUsersOrganizationsById,
