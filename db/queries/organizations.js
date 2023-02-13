@@ -157,13 +157,10 @@ module.exports = {
   getOrganizationByName,
   getOrganizationsPasswordsById,
   insertPassword,
-<<<<<<< HEAD
   getAllOrganizationTags,
   createOrganizationTag,
   deleteOrganizationTagByName,
   deleteOrganizationTagById,
-=======
->>>>>>> 0846a04a51804077230cfc20ae5a23c60c425b2c
   getOrganizationsUsersById,
   inviteUser,
   deleteInvite,
