@@ -1,8 +1,15 @@
 const express = require('express');
 const router  = express.Router();
 
+const organizationHelper = require('../../db/queries/organizations');
+
 router.get("/:orgId/passwords", (req, res) => {
-  return res.send('Should GET /organizations/{org_id}/passwords');
+  const orgId = req.params.orgId;
+  const { userId } = req.body;
+
+  return organizationHelper.getOrganizationsPasswordsById(orgId)
+    .then(rows => res.json(rows))
+    .catch(err => res.json(err));
 });
 
 router.post('/:orgId/passwords', (req, res) => {
