@@ -1,10 +1,10 @@
 
 -- Insert Users
-INSERT INTO users(username, email, password) VALUES('Username 1', 'tristanjacobs@gmail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 2', 'allisonjackson@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 3', 'asherpoole@gmx.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 4', 'michaelgray@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
-INSERT INTO users(username, email, password) VALUES('Username 5', 'ariaatkinson@outlook.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('tristanjacobs@gmail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('allisonjackson@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('asherpoole@gmx.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('michaelgray@mail.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
+INSERT INTO users(email, password) VALUES('ariaatkinson@outlook.com', '$2a$12$XGQhw7cnT2ZXd4oq7tBwSuqyUkXIy1TEFGnN/Ij.YQK6R1GI354WW');
 
 -- Insert Organizations
 INSERT INTO organizations(owner_id, org_name) VALUES(1, 'Username 1s Org 1');
