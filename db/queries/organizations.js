@@ -41,6 +41,13 @@ const addUser = (userId, organizationId) => {
     });
 };
 
+const removeUser = (userId, organizationId) => {
+  return db.query('DELETE FROM users_organizations WHERE organization_id = $1 AND user_id = $2 RETURNING *;', [organizationId, userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getOrganizationByName = (name) => {
   return db.query('SELECT * FROM organizations WHERE organizations.org_name = $1;', [name])
     .then(data => {
@@ -79,11 +86,11 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
     });
 };
 
-
 module.exports = {
   getOrganizations,
   insertOrganization,
   addUser,
+  removeUser,
   getOrganizationByName,
   getOrganizationsPasswordsById,
   getOrganizationsUsersById,
