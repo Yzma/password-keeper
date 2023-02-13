@@ -18,47 +18,69 @@
   <link rel="stylesheet" href="/public/styles/layout.css" />
   <link rel="stylesheet" href="/styles/nav.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <!-- App JS -->
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/users.js"></script>
 </head>
 
 <body>
-  <!-- Top navbar (fixed) -->
-  <nav>
-    <div class="nav">
-      <a href="#home">My Password</a>
-      <a href="#news">My Orgs</a>
-    </div>
-    <form class="search-bar" action="action_page.php">
-      <input type="text" placeholder="Search.." name="search">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-    <form class="create password" action="/users/new_password" name="create password" type="create password">
-      <button type="Submit">Create password</button>
-    </form>
-    <form class="logout" action="/auth/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-    <div class="picture">
-      <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
-    </div>
-  </nav>
-
-  <!-- <div class="content"> -->
-  <main>
-    <id class="container">
-      <div class="article-list">
-        <a class="article-box" >
-          <img class="article-image" alt="" width="150" height="150" />
-          <div class="article-box-text">
-            <p>Example statement</p>
-          </div>
-        </a>
+  <%- include('partials/_header', { user: null }) %>
+    <!-- Top navbar (fixed) -->
+    <header>
+      <nav>
+        <div class="nav">
+          <a href="#home">My Password</a>
+          <a href="#news">My Orgs</a>
+        </div>
+        <form class="search-bar" action="action_page.php">
+          <input type="text" placeholder="Search.." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <form class="create password" action="/users/new_password" name="create password" type="create password">
+          <button type="Submit">Create password</button>
+        </form>
+        <form class="logout" action="/auth/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
+        <div class="picture">
+          <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
+        </div>
+      </nav>
+    </header>
+    <!-- <div class="content"> -->
+    <main>
+      <div id="restrictedVaultContent" class="absolute"></div>
+      <div class="folderContainer">
+        <div class="folderLabel space-clickable" vaultaction="toggleOpen" tabindex="17" id="folderTitle1" role="button"
+          aria-expanded="true" aria-label="Folder: Favorites" aria-controls="folderContent1">Favorites (0)</div>
       </div>
-    </id>
-  </main>
-  <h1>Have fun! 🥔</h1>
+      <div class="contents" id="folderContent1" aria-labelledby="folderTitle1" role="region">
+        <div class="itemContents"></div>
+        <div class="subFolderContents"></div>
+      </div>
+      <div class="itemContentPadding "></div>
+      <div class=" folderWrapper">
+        <div class="folder last">
+          <div class="folderContainer">
+            <div class="folderLabel space-clickable" vaultaction="toggleOpen" tabindex="17" id="folderTitle1"
+              role="button" aria-expanded="true" aria-label="Folder: Favorites" aria-controls="folderContent1">Favorites
+              (0)</div>
+          </div>
+        </div>
+      </div>
+      <id class="container">
+        <div class="article-list">
+          <a class="article-box">
+            <img class="article-image" alt="" width="150" height="150" />
+            <div class="article-box-text">
+              <p>Example statement</p>
+            </div>
+          </a>
+        </div>
+      </id>
+    </main>
+    <h1>Have fun! 🥔</h1>
 </body>
 
 </html>
