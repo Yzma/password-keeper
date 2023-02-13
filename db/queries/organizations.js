@@ -67,6 +67,13 @@ const getOrganizationsPasswordsById = (organizationId) => {
     });
 };
 
+const insertPassword = (organizationId, websiteName, username, password, tagId) => {
+  return db.query(`INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES($1, $2, $3, $4, $5);`, [websiteName, username, password, organizationId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 // TODO: Test this, this was implemented without testing with seed data
 const getOrganizationsUsersById = (organizationId) => {
   return db.query(`SELECT users.id, users.email
@@ -107,6 +114,7 @@ module.exports = {
   removeUser,
   getOrganizationByName,
   getOrganizationsPasswordsById,
+  insertPassword,
   getOrganizationsUsersById,
   inviteUser,
   deleteInvite,
