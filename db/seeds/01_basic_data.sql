@@ -17,6 +17,11 @@ INSERT INTO tags(name) VALUES('Gaming');
 INSERT INTO tags(name) VALUES('Entertainment');
 INSERT INTO tags(name) VALUES('Social');
 
+-- Insert some users into Organization 1
+INSERT INTO users_organizations(user_id, organization_id) VALUES(1, 1);
+INSERT INTO users_organizations(user_id, organization_id) VALUES(2, 1);
+INSERT INTO users_organizations(user_id, organization_id) VALUES(3, 1);
+
 -- User Passwords
 INSERT INTO user_passwords(website_name, username, password, user_id, tag_id) VALUES('user website 1', 'user username 1', 'test-password', 1, 1);
 INSERT INTO user_passwords(website_name, username, password, user_id, tag_id) VALUES('user website 1', 'user username 1', 'test-password2', 1, 1);
