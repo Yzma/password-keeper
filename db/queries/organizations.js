@@ -86,6 +86,27 @@ const getOrganizationsUsersById = (organizationId) => {
     });
 };
 
+
+// router.get("/:orgId/tags", (req, res) => {
+//   return res.send('Should GET /organizations/{org_id}/tags');
+// });
+
+// router.post('/:orgId/tags', (req, res) => {
+//   return res.send('Should POST /organizations/{org_id}/tags');
+// });
+
+// router.delete('/:orgId/tags', (req, res) => {
+//   return res.send('Should DELETE /organizations/{org_id}/tags');
+// });
+
+
+const getAllOrganizationTags = (organizationId) => {
+  return db.query('SELECT * FROM organization_password_tags WHERE organization_id = $1', [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const inviteUser = (organizationId, userId) => {
   return db.query('INSERT INTO invites(user_id, organizationId) VALUES($1, $2) RETURNING *', [userId, organizationId])
     .then(data => {
