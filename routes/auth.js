@@ -42,6 +42,25 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.post('/register', (req, res) => {
+  const { username, email, password } = req.body;
+  console.log(username);
+  console.log(email);
+  console.log(password);
+  return users.insertUser({ username, email, password })
+    .then(result => result[0]) // TODO: Change this so the result isn't an array of rows
+    .then(user => {
+
+      req.session.userId = user.id;
+      return res.redirect('/users');
+
+    }).catch((err) => {
+      console.log('Error logging in: ', err);
+      return res.send('Invalid login');
+    });
+});
+
+
 router.post('/logout', (req, res) => {
   req.session.userId = null;
   return res.redirect('/users/login');
