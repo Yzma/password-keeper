@@ -28,6 +28,8 @@ GET - /users/passwords - Returns the Users personal passwords
 /users/invites - GET - Returns an array of invites the User has
 /users/invites - DELETE - Deletes an invite the user has received
 
+GET - /share_password - form to add/share password
+
 ## Organization Routes (/organizations)
 
 
