@@ -117,6 +117,34 @@ const getUsersPendingInvitesById = (userId) => {
     });
 };
 
+const getAllUserTags = (userId) => {
+  return db.query('SELECT * FROM user_password_tags WHERE user_id = $1', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const createUserTag = (userId, name) => {
+  return db.query('INSERT INTO user_password_tags(user_id, name) VALUES($1, $2) RETURNING *', [userId, name])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteUserTagByName = (userId, name) => {
+  return db.query('DELETE FROM user_password_tags WHERE user_id = $1 AND name = $2 RETURNING *', [userId, name])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteUserTagById = (userId, tagId) => {
+  return db.query('DELETE FROM user_password_tags WHERE user_id = $1 AND id = $2 RETURNING *', [userId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 module.exports = {
   getUsers,
   _getMyInfo,
@@ -124,7 +152,14 @@ module.exports = {
   insertUser,
   getUserByEmail,
   getUsersPasswordsById,
+  insertPassword,
+  deletePassword,
+  updatePassword,
   getUsersOrganizationsById,
   getUsersPendingInvitesById,
+  getAllUserTags,
+  createUserTag,
+  deleteUserTagById,
+  deleteUserTagByName,
   deleteInvite
 };
