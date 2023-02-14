@@ -13,26 +13,27 @@ router.get("/passwords", (req, res) => {
 
 router.post('/passwords', (req, res) => {
   const userId = req.session.userID; // TODO: Use auth-middleware to handle this
-
-  return usersHelper.insertPassword(orgId, websiteName, username, password, tagId)
+  const { websiteName, username, password, tagId } = req.body;
+  
+  return usersHelper.insertPassword(userId, websiteName, username, password, tagId)
     .then(rows => res.json(rows))
     .catch(err => res.json(err));
 });
 
 router.delete('/passwords', (req, res) => {
-  const orgId = req.params.orgId;
+  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
   const { passwordId } = req.body;
 
-  return usersHelper.deletePassword(orgId, passwordId)
+  return usersHelper.deletePassword(userId, passwordId)
     .then(rows => res.json(rows))
     .catch(err => res.json(err));
 });
 
 router.patch('/passwords', (req, res) => {
-  const orgId = req.params.orgId;
+  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
   const { passwordId, websiteName, username, password, tagId } = req.body;
  
-  return usersHelper.updatePassword(orgId, passwordId, websiteName, username, password, tagId)
+  return usersHelper.updatePassword(userId, passwordId, websiteName, username, password, tagId)
     .then(rows => res.json(rows))
     .catch(err => {
       console.log('error: ', err);

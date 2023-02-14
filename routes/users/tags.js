@@ -1,33 +1,32 @@
 const express = require('express');
 const router  = express.Router();
 
+const usersHelper = require('../../db/queries/users');
 
+router.get("/tags", (req, res) => {
+  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
 
-// router.get("/tags", (req, res) => {
-//   const orgId = req.params.orgId;
-//   const { userId } = req.body;
+  return usersHelper.getAllUserTags(userId)
+    .then(rows => res.json(rows))
+    .catch(err => res.json(err));
+});
 
-//   return organizationHelper.getAllOrganizationTags(orgId)
-//     .then(rows => res.json(rows))
-//     .catch(err => res.json(err));
-// });
+router.post('/tags', (req, res) => {
+  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const { name } = req.body;
 
-// router.post('/tags', (req, res) => {
-//   const orgId = req.params.orgId;
-//   const { name } = req.body;
+  return usersHelper.createUsernTag(userId, name)
+    .then(rows => res.json(rows))
+    .catch(err => res.json(err));
+});
 
-//   return organizationHelper.createOrganizationTag(orgId, name)
-//     .then(rows => res.json(rows))
-//     .catch(err => res.json(err));
-// });
+router.delete('/tags', (req, res) => {
+  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const { name } = req.body;
 
-// router.delete('/tags', (req, res) => {
-//   const orgId = req.params.orgId;
-//   const { name } = req.body;
-
-//   return organizationHelper.deleteOrganizationTag(orgId, name)
-//     .then(rows => res.json(rows))
-//     .catch(err => res.json(err));
-// });
+  return usersHelper.deleteUserTag(userId, name)
+    .then(rows => res.json(rows))
+    .catch(err => res.json(err));
+});
 
 module.exports = router;
