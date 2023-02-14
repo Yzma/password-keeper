@@ -1,12 +1,14 @@
 const express = require('express');
 const router  = express.Router();
 
+const ensureOrganizationMember = require('../../lib/ensure-organization-member');
 const organizationHelper = require('../../db/queries/organizations');
 
-router.get("/:orgId/passwords", (req, res) => {
+// TODO:
+router.get("/:orgId/passwords", ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
-  const { userId } = req.body;
-
+  const { userId } = req.body; //const userId = req.session.userId;
+  
   return organizationHelper.getOrganizationsPasswordsById(orgId)
     .then(rows => res.json(rows))
     .catch(err => res.json(err));
