@@ -1,21 +1,21 @@
 
-## Frontend Routes (All GET requests)
+# Frontend Routes (All GET requests)
 
-/ - Index page
-/login - Render login page
-/passwords - Render Users personal passwords
-/passwords/new_password - Renders the page to generate a new password for the user
+- / - Index page
+- /login - Render login page
+- /passwords - Render Users personal passwords
+- /passwords/new_password - Renders the page to generate a new password for the user
 
-/orgs - Renders the users organizations
-/orgs/{org_id}/passwords - Renders the organizations passwords
-/orgs/{org_id}/passwords/new_password - Renders the page to generate a new password for the org
+- /orgs - Renders the users organizations
+- /orgs/{org_id}/passwords - Renders the organizations passwords
+- /orgs/{org_id}/passwords/new_password - Renders the page to generate a new password for the org
 
 # Auth Routes
 
-GET  - /auth/me - Returns information about the signed in User
-POST - /auth/login - Posts a login request for the user to sign in
-POST - /auth/logout - Logs the user out
-POST - /auth/register - Register the user
+- GET  - /auth/me - Returns information about the signed in User
+- POST - /auth/login - Posts a login request for the user to sign in
+- POST - /auth/logout - Logs the user out
+- POST - /auth/register - Register the user
 
 # User Routes (/users/)
 
