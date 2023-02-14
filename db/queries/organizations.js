@@ -68,7 +68,27 @@ const getOrganizationsPasswordsById = (organizationId) => {
 };
 
 const insertPassword = (organizationId, websiteName, username, password, tagId) => {
-  return db.query(`INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES($1, $2, $3, $4, $5);`, [websiteName, username, password, organizationId, tagId])
+  return db.query(`INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *;`, [websiteName, username, password, organizationId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deletePassword = (organizationId, passwordId) => {
+  return db.query(`DELETE FROM organization_passwords WHERE organization_id = $1 AND id = $2 RETURNING *;`, [organizationId, passwordId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const updatePassword = (orgId, passwordId, websiteName, username, password, tagId) => {
+  return db.query(`UPDATE organization_passwords SET
+      website_name = COALESCE(NULLIF($3, E''), website_name),
+      username = COALESCE(NULLIF($4, E''), username),
+      password = COALESCE(NULLIF($5, E''), password),
+      tag_id = COALESCE(CAST(NULLIF($6, E'') AS INTEGER), tag_id)
+    WHERE organization_id = $1 AND id = $2 RETURNING *;`
+  , [orgId, passwordId, websiteName, username, password, tagId])
     .then(data => {
       return data.rows;
     });
@@ -85,20 +105,6 @@ const getOrganizationsUsersById = (organizationId) => {
       return data.rows;
     });
 };
-
-
-// router.get("/:orgId/tags", (req, res) => {
-//   return res.send('Should GET /organizations/{org_id}/tags');
-// });
-
-// router.post('/:orgId/tags', (req, res) => {
-//   return res.send('Should POST /organizations/{org_id}/tags');
-// });
-
-// router.delete('/:orgId/tags', (req, res) => {
-//   return res.send('Should DELETE /organizations/{org_id}/tags');
-// });
-
 
 const getAllOrganizationTags = (organizationId) => {
   return db.query('SELECT * FROM organization_password_tags WHERE organization_id = $1', [organizationId])
@@ -157,6 +163,8 @@ module.exports = {
   getOrganizationByName,
   getOrganizationsPasswordsById,
   insertPassword,
+  deletePassword,
+  updatePassword,
   getAllOrganizationTags,
   createOrganizationTag,
   deleteOrganizationTagByName,
