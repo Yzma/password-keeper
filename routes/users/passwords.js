@@ -4,7 +4,7 @@ const router  = express.Router();
 const usersHelper = require('../../db/queries/users');
 
 router.get("/passwords", (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
 
   return usersHelper.getUsersPasswordsById(userId)
     .then(rows => res.json(rows))
@@ -12,7 +12,7 @@ router.get("/passwords", (req, res) => {
 });
 
 router.post('/passwords', (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
   const { websiteName, username, password, tagId } = req.body;
   
   return usersHelper.insertPassword(userId, websiteName, username, password, tagId)
@@ -21,7 +21,7 @@ router.post('/passwords', (req, res) => {
 });
 
 router.delete('/passwords', (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
   const { passwordId } = req.body;
 
   return usersHelper.deletePassword(userId, passwordId)
@@ -30,7 +30,7 @@ router.delete('/passwords', (req, res) => {
 });
 
 router.patch('/passwords', (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
   const { passwordId, websiteName, username, password, tagId } = req.body;
  
   return usersHelper.updatePassword(userId, passwordId, websiteName, username, password, tagId)
