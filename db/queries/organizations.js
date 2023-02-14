@@ -8,6 +8,13 @@ const getOrganizations = () => {
     });
 };
 
+const renameOrganization = (organizationId, newName) => {
+  return db.query('UPDATE organizations SET org_name = $1 WHERE id = $2 RETURNING *;', [newName, organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 // TODO: We have to do multiple queries here:
 // 1: Insert into the organizations tables
 // 2: Insert into the users_organizations table
@@ -67,6 +74,33 @@ const getOrganizationsPasswordsById = (organizationId) => {
     });
 };
 
+const insertPassword = (organizationId, websiteName, username, password, tagId) => {
+  return db.query(`INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *;`, [websiteName, username, password, organizationId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deletePassword = (organizationId, passwordId) => {
+  return db.query(`DELETE FROM organization_passwords WHERE organization_id = $1 AND id = $2 RETURNING *;`, [organizationId, passwordId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const updatePassword = (orgId, passwordId, websiteName, username, password, tagId) => {
+  return db.query(`UPDATE organization_passwords SET
+      website_name = COALESCE(NULLIF($3, E''), website_name),
+      username = COALESCE(NULLIF($4, E''), username),
+      password = COALESCE(NULLIF($5, E''), password),
+      tag_id = COALESCE(CAST(NULLIF($6, E'') AS INTEGER), tag_id)
+    WHERE organization_id = $1 AND id = $2 RETURNING *;`
+  , [orgId, passwordId, websiteName, username, password, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 // TODO: Test this, this was implemented without testing with seed data
 const getOrganizationsUsersById = (organizationId) => {
   return db.query(`SELECT users.id, users.email
@@ -74,6 +108,34 @@ const getOrganizationsUsersById = (organizationId) => {
     JOIN users_organizations ON users_organizations.user_id = users.id
     JOIN organizations ON organizations.id = users_organizations.organization_id
     WHERE organizations.id = $1;`, [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const getAllOrganizationTags = (organizationId) => {
+  return db.query('SELECT * FROM organization_password_tags WHERE organization_id = $1', [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const createOrganizationTag = (organizationId, name) => {
+  return db.query('INSERT INTO organization_password_tags(organization_id, name) VALUES($1, $2) RETURNING *', [organizationId, name])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteOrganizationTagByName = (organizationId, name) => {
+  return db.query('DELETE FROM organization_password_tags WHERE organization_id = $1 AND name = $2 RETURNING *', [organizationId, name])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteOrganizationTagById = (organizationId, tagId) => {
+  return db.query('DELETE FROM organization_password_tags WHERE organization_id = $1 AND id = $2 RETURNING *', [organizationId, tagId])
     .then(data => {
       return data.rows;
     });
@@ -102,11 +164,19 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
 
 module.exports = {
   getOrganizations,
+  renameOrganization,
   insertOrganization,
   addUser,
   removeUser,
   getOrganizationByName,
   getOrganizationsPasswordsById,
+  insertPassword,
+  deletePassword,
+  updatePassword,
+  getAllOrganizationTags,
+  createOrganizationTag,
+  deleteOrganizationTagByName,
+  deleteOrganizationTagById,
   getOrganizationsUsersById,
   inviteUser,
   deleteInvite,

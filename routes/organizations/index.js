@@ -35,8 +35,17 @@ router.post('/', (req, res) => {
 });
 
 // TODO: UPDATE /{org_id} - Updates information about the organization
-router.patch('/:org_id', (req, res) => {
-  return res.send('Should UPDATE /organizations/{orgId}/');
+router.patch('/:orgId', (req, res) => {
+  const orgId = req.params.orgId;
+  const { name } = req.body;
+
+  return organizationsHelper.renameOrganization(orgId, name)
+    .then(result => {
+      return res.json(result);
+    })
+    .catch(err => { // TODO: Change this so we don't give the DB error
+      return res.json({ error: err.detail });
+    });
 });
 
 router.use('/', invites);
