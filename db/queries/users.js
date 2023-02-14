@@ -62,13 +62,49 @@ const getUsersPasswordsById = (userId) => {
     });
 };
 
+// TODO: These functions are duplicate, move them into a seperate function and call the same one for both users and organizations
+const insertPassword = (userId, websiteName, username, password, tagId) => {
+  return db.query(`INSERT INTO user_passwords(website_name, username, password, userId, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *;`, [websiteName, username, password, userId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deletePassword = (userId, passwordId) => {
+  return db.query(`DELETE FROM user_passwords WHERE userId = $1 AND id = $2 RETURNING *;`, [userId, passwordId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const updatePassword = (userId, passwordId, websiteName, username, password, tagId) => {
+  return db.query(`UPDATE user_passwords SET
+      website_name = COALESCE(NULLIF($3, E''), website_name),
+      username = COALESCE(NULLIF($4, E''), username),
+      password = COALESCE(NULLIF($5, E''), password),
+      tag_id = COALESCE(CAST(NULLIF($6, E'') AS INTEGER), tag_id)
+    WHERE userId = $1 AND id = $2 RETURNING *;`
+  , [userId, passwordId, websiteName, username, password, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+
 // TODO: Test this, this was implemented without testing with seed data
 const getUsersOrganizationsById = (userId) => {
   return db.query(`SELECT organizations.org_name
     FROM organizations
-    JOIN users_organizations ON users_organizations.organization_id = organizations.id
-    JOIN users ON users.id = users_organizations.user_id
-    WHERE users.id = $1;`, [userId])
+    LEFT JOIN users_organizations ON users_organizations.organization_id = organizations.id
+    LEFT JOIN users ON users.id = users_organizations.user_id
+    WHERE organizations.owner_id = $1;`, [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deleteInvite = (userId, inviteId) => {
+  return db.query('DELETE FROM invites WHERE invites.user_id = $1;', [userId])
     .then(data => {
       return data.rows;
     });
@@ -89,5 +125,6 @@ module.exports = {
   getUserByEmail,
   getUsersPasswordsById,
   getUsersOrganizationsById,
-  getUsersPendingInvitesById
+  getUsersPendingInvitesById,
+  deleteInvite
 };
