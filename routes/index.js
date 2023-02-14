@@ -13,12 +13,12 @@ router.get('/', [authMiddleware()], (req, res) => {
   res.render('index', templateVars);
 });
 
-router.get("/users", [authMiddleware()], (req, res) => {
-  console.log('/users user: ', req.user);
+router.get("/users/passwords", [authMiddleware()], (req, res) => {
+  console.log('THIS IS *******/users/passwords: ', req.user);
   const templateVars = {
     user: req.user
   };
-  res.render("users", templateVars);
+  res.render("passwords", templateVars);
 });
 
 router.get("/login", [authMiddleware()], (req, res) => {
