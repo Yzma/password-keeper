@@ -4,7 +4,7 @@ const router  = express.Router();
 const usersHelper = require('../../db/queries/users');
 
 router.get("/tags", (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
 
   return usersHelper.getAllUserTags(userId)
     .then(rows => res.json(rows))
@@ -12,7 +12,7 @@ router.get("/tags", (req, res) => {
 });
 
 router.post('/tags', (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
   const { name } = req.body;
 
   return usersHelper.createUsernTag(userId, name)
@@ -21,7 +21,7 @@ router.post('/tags', (req, res) => {
 });
 
 router.delete('/tags', (req, res) => {
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
   const { name } = req.body;
 
   return usersHelper.deleteUserTag(userId, name)
