@@ -2,7 +2,7 @@
 const express = require('express');
 const router  = express.Router();
 
-const usersHelper = require('../../db/queries/organizations');
+const usersHelper = require('../../db/queries/users');
 
 const invites = require('./invites');
 const passwords = require('./passwords');
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:userId", (req, res) => {
+router.get("/user/:userId", (req, res) => {
   const userId = req.params.userId;
   return usersHelper.getUserById(userId)
     .then(result => {
