@@ -8,6 +8,13 @@ const getOrganizations = () => {
     });
 };
 
+const renameOrganization = (organizationId, newName) => {
+  return db.query('UPDATE organizations SET org_name = $1 WHERE id = $2 RETURNING *;', [newName, organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 // TODO: We have to do multiple queries here:
 // 1: Insert into the organizations tables
 // 2: Insert into the users_organizations table
@@ -157,6 +164,7 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
 
 module.exports = {
   getOrganizations,
+  renameOrganization,
   insertOrganization,
   addUser,
   removeUser,
