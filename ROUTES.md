@@ -1,4 +1,3 @@
-
 # Frontend Routes (All GET requests)
 
 - / - Index page
@@ -76,3 +75,4 @@
 - GET    - /organizations/{org_id}/invites - Returns the organizations pending invites
 - POST   - /organizations/{org_id}/invites - Invites a user to the organization
 - DELETE - /organizations/{org_id}/invites - Deletes an outgoing pending invite
+

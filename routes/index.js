@@ -36,4 +36,17 @@ router.get("/new_password", [authMiddleware()], (req, res) => {
   res.render("new_password", templateVars);
 });
 
+router.get('/share_password', [authMiddleware()], (req, res) => {
+  const templateVars = {
+    user: req.user
+  };
+  res.render('share_password', templateVars);
+});
+
+router.get('/orgs', [authMiddleware()], (req, res) => {
+  const templateVars = {
+    user: req.user
+  };
+  res.render('orgs', templateVars);
+});
 module.exports = router;
