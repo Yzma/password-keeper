@@ -17,12 +17,13 @@ html {
   margin-bottom: 50px;
   color: gray;
   background-color: gray;
-
 }
 
-
-
-
+.share_password {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
 
 .password-box {
   display: flex;

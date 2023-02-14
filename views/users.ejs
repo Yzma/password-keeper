@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Share password</title>
+  <title>Passwords</title>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,6 +30,10 @@
 
   <%- include('partials/_header', { user: user }) %>
     <div class="box-container">
+      <section class="create_org" id="create_org"></section>
+      <form class="create-org" action="/create_org">
+        <button type="Submit">Create Organizations</button>
+      </form>
       <section class="share_password" id="share_password"></section>
       <form class="share-password" action="/share_password">
         <button type="Submit">Share password</button>
