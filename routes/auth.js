@@ -1,4 +1,7 @@
 
+const { userSchema } = require('../lib/validation-schemas');
+const { validationMiddleware } = require('../lib/validation-middleware');
+
 const express = require('express');
 const router  = express.Router();
 
@@ -7,14 +10,8 @@ const bcrypt = require('bcryptjs');
 
 const authMiddleware = require('../lib/auth-middleware');
 
-router.post("/login", (req, res) => {
+router.post("/login", validationMiddleware(userSchema), (req, res) => {
   const { email, password } = req.body;
-
-  // TODO: Create util methods to check
-
-  // if (!isValid(email, password)) {
-  //   return res.status(400).json({ error: 'Invalid username or password'});
-  // }
 
   // TODO:
   // Cleanup
@@ -42,7 +39,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', validationMiddleware(userSchema), (req, res) => {
   const { email, password } = req.body;
   console.log(email);
   console.log(password);
@@ -58,7 +55,6 @@ router.post('/register', (req, res) => {
       return res.send('Invalid login');
     });
 });
-
 
 router.post('/logout', (req, res) => {
   req.session.userId = null;
