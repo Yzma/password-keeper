@@ -10,9 +10,9 @@ const fetchOrganizationOutgoingInvites = (org, callback) => {
 
 const renderInvite = (invite) => {
   return `<div class="grid-item">
-    <a>ID: ${invite.id}</a>
-    <a>Created At: ${invite.created_at}</a>
-    <a>User ID: ${invite.user_id}</a>
+    <a>ID: ${invite.id}</a><br>
+    <a>Created At: ${ new Date(invite.created_at).toLocaleString() }</a><br>
+    <a>User ID: ${invite.email}</a>
   </div>`;
 };
 

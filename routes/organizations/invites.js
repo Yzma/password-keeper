@@ -9,7 +9,10 @@ router.get("/:orgId/invites", ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   
   return organizationHelper.getOrganizationsPendingInvitesById(orgId)
-    .then(rows => res.json(rows))
+    .then(rows => {
+      console.log('rows: ', rows);
+      return res.json(rows);
+    })
     .catch(err => res.json(err));
 });
 
