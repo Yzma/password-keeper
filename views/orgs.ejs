@@ -27,7 +27,8 @@
 
 <body>
   <!-- Top navbar (fixed) -->
-
+  <a><%= JSON.stringify(user) %></a>
+  <a><%= JSON.stringify(passwords) %></a>
   <%- include('partials/_header', { user: user }) %>
     <div class="box-container">
       <section class="share_password" id="share_password"></section>

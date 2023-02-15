@@ -1,6 +1,12 @@
 const express = require('express');
 const router  = express.Router();
 
+const cookieParser = require('cookie-parser');
+
+const app = express();
+
+app.use(cookieParser());
+
 const userHelper = require('../../db/queries/users');
 
 router.get("/invites", (req, res) => {
