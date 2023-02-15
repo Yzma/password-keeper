@@ -72,12 +72,12 @@ router.get('/orgs/:orgId/passwords', [authMiddleware({ redirect: '/login' })], (
   const orgId = req.params.orgId;
   return organizations.getOrganizationById(orgId)
     .then(data => {
-      return organizations.getAllOrganizationTags(orgId)
-        .then(tags => {
+      return organizations.getOrganizationsPasswordsById(orgId)
+        .then(passwords => {
           const templateVars = {
             user: req.user,
             org: data,
-            tags: tags
+            passwords: passwords
           };
           return res.render('passwords', templateVars);
         });
@@ -86,16 +86,16 @@ router.get('/orgs/:orgId/passwords', [authMiddleware({ redirect: '/login' })], (
     });
 });
 
-router.get('/orgs/:orgId/new_password', [authMiddleware({ redirect: '/login' })], (req, res) => {
+router.get('/orgs/:orgId/passwords/new_password', [authMiddleware({ redirect: '/login' })], (req, res) => {
   const orgId = req.params.orgId;
   return organizations.getOrganizationById(orgId)
     .then(data => {
-      return organizations.getOrganizationsPasswordsById(orgId)
-        .then(passwords => {
+      return organizations.getAllOrganizationTags(orgId)
+        .then(tags => {
           const templateVars = {
             user: req.user,
             org: data,
-            passwords: passwords
+            tags: tags
           };
           return res.render('new_password', templateVars);
         });
