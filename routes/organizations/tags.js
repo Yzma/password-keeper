@@ -1,9 +1,11 @@
 const express = require('express');
 const router  = express.Router();
 
+const ensureOrganizationMember = require('../../lib/ensure-organization-member');
+
 const organizationHelper = require('../../db/queries/organizations');
 
-router.get("/:orgId/tags", (req, res) => {
+router.get("/:orgId/tags", ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { userId } = req.body;
 
@@ -12,7 +14,7 @@ router.get("/:orgId/tags", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.post('/:orgId/tags', (req, res) => {
+router.post('/:orgId/tags', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { name } = req.body;
 
@@ -21,7 +23,7 @@ router.post('/:orgId/tags', (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.delete('/:orgId/tags', (req, res) => {
+router.delete('/:orgId/tags', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { name } = req.body;
 

@@ -1,9 +1,11 @@
 const express = require('express');
 const router  = express.Router();
 
+const ensureOrganizationMember = require('../../lib/ensure-organization-member');
+
 const organizationHelper = require('../../db/queries/organizations');
 
-router.get("/:orgId/invites", (req, res) => {
+router.get("/:orgId/invites", ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   
   return organizationHelper.getOrganizationsPendingInvitesById(orgId)
@@ -11,7 +13,7 @@ router.get("/:orgId/invites", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.post('/:orgId/invites', (req, res) => {
+router.post('/:orgId/invites', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { userEmail } = req.body;
 
@@ -20,7 +22,7 @@ router.post('/:orgId/invites', (req, res) => {
     .catch(err => res.json({ error: err.message }));
 });
 
-router.delete('/:orgId/invites', (req, res) => {
+router.delete('/:orgId/invites', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { inviteId } = req.body;
 
