@@ -14,7 +14,7 @@ router.get("/:orgId/passwords", ensureOrganizationMember(), (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.post('/:orgId/passwords', (req, res) => {
+router.post('/:orgId/passwords', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { websiteName, username, password, tagId } = req.body;
 
@@ -23,7 +23,7 @@ router.post('/:orgId/passwords', (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.delete('/:orgId/passwords', (req, res) => {
+router.delete('/:orgId/passwords', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { passwordId } = req.body;
 
@@ -32,7 +32,7 @@ router.delete('/:orgId/passwords', (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.patch('/:orgId/passwords', (req, res) => {
+router.patch('/:orgId/passwords', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { passwordId, websiteName, username, password, tagId } = req.body;
  
