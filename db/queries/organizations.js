@@ -62,6 +62,14 @@ const getOrganizationByName = (name) => {
     });
 };
 
+const getOrganizationById = (organizationId) => {
+  return db.query('SELECT * FROM organizations WHERE organizations.id = $1;', [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+
 // TODO: Come back to this later on once tags are implemented.
 // We need to JOIN the table to actually get the tags names instead of just their IDs.
 // Returns the Organizations passwords by the Organization ID
@@ -162,6 +170,14 @@ const getOrganizationsPendingInvitesById = (organizationId) => {
     });
 };
 
+const getOrganizationsPasswordsFrontend = (organizationId) => {
+  return db.query('SELECT * FROM invites WHERE invites.organization_id = $1;', [organizationId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+
 module.exports = {
   getOrganizations,
   renameOrganization,
@@ -169,6 +185,7 @@ module.exports = {
   addUser,
   removeUser,
   getOrganizationByName,
+  getOrganizationById,
   getOrganizationsPasswordsById,
   insertPassword,
   deletePassword,
