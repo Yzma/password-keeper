@@ -31,11 +31,11 @@
   <%- include('partials/_header', { user: user }) %>
     <div class="box-container">
       <section class="share_password" id="share_password"></section>
-      <form class="share-password" action="/invites">
+      <form class="share-password" action="/users/invites">
         <button type="Submit">Share password</button>
       </form>
       <section class="create_password" id="create_password"></section>
-        <form class="create-password" action="/new_password">
+        <form class="create-password" action="/users/new_password">
           <button type="Submit">Create password</button>
         </form>
     </div>
