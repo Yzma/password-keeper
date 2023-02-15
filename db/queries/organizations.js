@@ -190,7 +190,7 @@ const deleteInvite = (organizationId, inviteId) => {
 };
 
 const getOrganizationsPendingInvitesById = (organizationId) => {
-  return db.query(`SELECT invites.*, users.email, users.id 
+  return db.query(`SELECT invites.*, users.email, users.id AS user_id
     FROM invites
     JOIN users ON invites.user_id = users.id
     WHERE invites.organization_id = $1;`, [organizationId])

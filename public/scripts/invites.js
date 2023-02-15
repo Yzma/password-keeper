@@ -8,12 +8,33 @@ const fetchOrganizationOutgoingInvites = (org, callback) => {
     });
 };
 
-const renderInvite = (invite) => {
-  return `<div class="grid-item">
+const renderInvite = (org, invite) => {
+  const newGridItem = $(`<div class="grid-item">
     <a>ID: ${invite.id}</a><br>
     <a>Created At: ${ new Date(invite.created_at).toLocaleString() }</a><br>
-    <a>User ID: ${invite.email}</a>
-  </div>`;
+    <a>User ID: ${invite.email}</a><br>
+    <button>Cancel Invite</button>
+  </div>`);
+
+  newGridItem.click('button', () => {
+    
+    const inviteId = invite.id;
+    $.ajax({
+      url: `/organizations/${org.id}/invites`,
+      type: 'DELETE',
+      success: (result) => {
+        console.log('result', result);
+        $(newGridItem).remove();
+      },
+      error: (e) => {
+        console.log('failed to delete', e);
+      },
+      data: {
+        inviteId: inviteId
+      }
+    });
+  });
+  return newGridItem;
 };
 
 $(document).ready(function() {
@@ -32,9 +53,9 @@ $(document).ready(function() {
     $.post(`/organizations/${org.id}/invites`, usernameData)
       .then((result) => {
         console.log('RESULT: ', result);
-        // TODO: Show HTML that the user was invited
+        // TODO: This doesn't return the correct data to render, we would need to fetch from the invites table again
+        // $("#outgoing-invites").append(renderInvite(org, result));
       }).catch((e) => {
-        // TODO: Show HTML that the user was not found
         console.error('Error posting tweet:', e);
       });
   });
@@ -52,7 +73,7 @@ $(document).ready(function() {
       outgoingInvites.removeClass('hidden');
       for (let i of result) {
         console.log(i);
-        outgoingInvites.append(renderInvite(i));
+        outgoingInvites.append(renderInvite(org, i));
       }
     }
   });
