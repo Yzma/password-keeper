@@ -12,7 +12,7 @@ $(document).ready(function () {
   $("#copy_password_button").click(copyPassword);
 });
 
-//function to display password with informations on users page
+
 function viewPassword() {
   let viewText = document.getElementById("password");
   viewText.select();

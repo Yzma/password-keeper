@@ -2,12 +2,16 @@
 
 - / - Index page
 - /login - Render login page
+
 - /passwords - Render Users personal passwords
 - /passwords/new_password - Renders the page to generate a new password for the user
+
+- /invites - Renders the page to send invites to share passwords 
 
 - /orgs - Renders the users organizations
 - /orgs/{org_id}/passwords - Renders the organizations passwords
 - /orgs/{org_id}/passwords/new_password - Renders the page to generate a new password for the org
+- /organizations - Renders the page to create new organizations
 
 # Auth Routes
 

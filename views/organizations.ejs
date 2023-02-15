@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-  <!-- Meta Information -->
-  <title>Share Password</title>
+  <title>Create organizations</title>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,10 +11,10 @@
   <!-- External CSS -->
 
   <!-- App CSS -->
+
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/users.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/new_password.css" />
   <link rel="stylesheet" href="/styles/nav.css" />
@@ -23,28 +22,28 @@
 
   <!-- App JS -->
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-
+  <script defer src="/scripts/users.js"></script>
 </head>
 
 <body>
 
-    <%- include('partials/_header', { user: user }) %>
+  <%- include('partials/_header', { user: user }) %>
 
-  <main>
-    <!-- New password section -->
-    <section class="share_password">
-      <div class="w3-display-middle"></div>
-      <h2>Share password</h2>
-    </section>
-    <section class="add user" id="add_user"></section>
-    <form class="add user" method="POST" action="/users">
-      Add new user:<br>
-      <input type="text" name="new_user_id" placeholder="New user id" required><br><br>
-      <button type="submit">Share password</button>
-    </form>
-    </section>
-  </main>
+<main>
+  <!-- New password section -->
+  <section class="create_organizations">
+    <div class="w3-display-middle"></div>
+    <h2>Create new organization</h2>
+  </section>
+  <section class="new organization" id="new_organization"></section>
+  <form class="new organization" method="POST" action="/orgs">
+    Add new organization:<br>
+    <input type="text" name="Organization name" placeholder="Organization name" required><br><br>
+    <button type="submit">Create</button>
+  </form>
+  </section>
+</main>
 </body>
+
 
 </html>

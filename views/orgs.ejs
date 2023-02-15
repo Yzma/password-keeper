@@ -31,7 +31,7 @@
   <%- include('partials/_header', { user: user }) %>
     <div class="box-container">
       <section class="share_password" id="share_password"></section>
-      <form class="share-password" action="/share_password">
+      <form class="share-password" action="/invites">
         <button type="Submit">Share password</button>
       </form>
       <section class="create_password" id="create_password"></section>
@@ -42,8 +42,11 @@
     <!-- <div class="content"> -->
     <main>
       <table class="table">
-        <div class="password-box">
-          <button class="password-button"></button>
+        <table class="table">
+          <display class="view_password_button"></display>
+          <button data-id="<%= user %>" id='view_password_button'>
+          </button>
+      </table>
         </div>
       </table>
     </main>
