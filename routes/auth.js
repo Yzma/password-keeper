@@ -38,17 +38,6 @@ app.get("/login", (req, res) => {
   }
 });
 
-
-
-
-
-
-
-// app.get('/login', (req, res) => {
-//   const username = req.cookies.user;
-//   res.render('passwords', { username });
-// });
-/////////////////////////////////////////////////////////cookies////////////////////////////////////
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 

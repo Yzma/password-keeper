@@ -9,16 +9,6 @@ app.use(cookieParser());
 
 // TODO: Change auth-middleware to redirect to login page on routes that are meant to be protected
 
-const userDatabase = {};
-app.get("/login", (req, res) => {
-  const userID = req.session.id;
-  if (userID) {
-    res.redirect("/passwords");
-  } else {
-    res.redirect("/login");
-  }
-});
-
 router.get("/", [authMiddleware()], (req, res) => {
   const templateVars = {
     user: req.user,
