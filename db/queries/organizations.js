@@ -1,5 +1,6 @@
 
 const db = require('../connection');
+const { getUserByEmail } = require('./users');
 
 const getOrganizations = () => {
   return db.query('SELECT * FROM organizations;')
@@ -149,6 +150,15 @@ const deleteOrganizationTagById = (organizationId, tagId) => {
     });
 };
 
+const inviteUserByEmail = (organizationId, email) => {
+  return getUserByEmail(email).then(res => {
+    console.log(res);
+    return db.query('INSERT INTO invites(user_id, organization_id) VALUES($1, $2) RETURNING *', [res[0].id, organizationId]);
+  }).then(data => {
+    return data.rows;
+  });
+};
+
 const inviteUser = (organizationId, userId) => {
   return db.query('INSERT INTO invites(user_id, organizationId) VALUES($1, $2) RETURNING *', [userId, organizationId])
     .then(data => {
@@ -195,6 +205,7 @@ module.exports = {
   deleteOrganizationTagByName,
   deleteOrganizationTagById,
   getOrganizationsUsersById,
+  inviteUserByEmail,
   inviteUser,
   deleteInvite,
   getOrganizationsPendingInvitesById
