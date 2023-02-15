@@ -15,6 +15,8 @@ router.post('/:orgId/invites', (req, res) => {
   const orgId = req.params.orgId;
   const { userEmail } = req.body;
 
+  console.log(userEmail);
+
   return organizationHelper.inviteUserByEmail(orgId, userEmail)
     .then(rows =>  {
       console.log('rows: ', rows);
@@ -22,7 +24,7 @@ router.post('/:orgId/invites', (req, res) => {
     })
     .catch(err =>  {
       console.log('Error (/:orgId/invites)', err);
-      return res.json({ error: 'User not found' });
+      return res.json({ error: err.message });
     });
 });
 
