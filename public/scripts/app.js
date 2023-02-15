@@ -13,3 +13,21 @@ $(document).ready(function () {
 });
 
 
+function viewPassword() {
+  let viewText = document.getElementById("password");
+  viewText.select();
+  console.log("view TEXT", $({ viewText }));
+  navigator.clipboard.writeText(viewText.value);
+  alert("Password Info: " + viewText.value);
+}
+
+$(document).ready(function () {
+  console.log("document", document);
+  console.log("view TEXT", $("#view_password_button"));
+  $("#view_password_button").click(function (event) {
+    alert(
+      "Handler for .click() called.",
+      $("#view_password_button").data("id")
+    );
+  });
+});

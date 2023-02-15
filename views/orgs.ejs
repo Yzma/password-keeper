@@ -31,19 +31,22 @@
   <%- include('partials/_header', { user: user }) %>
     <div class="box-container">
       <section class="share_password" id="share_password"></section>
-      <form class="share-password" action="/share_password">
+      <form class="share-password" action="/invites">
         <button type="Submit">Share password</button>
       </form>
-      <section class="create_password_button" id="create_password_button"></section>
-    <form class="create_password_button" method="POST" action="/new_password" name="create password" type="create password">
-      <button type="submit" class="create_password_button" action="/new_password" style="height:40px; width:200px; margin: 1em">Create new password</button>
-    </form>
+      <section class="create_password" id="create_password"></section>
+        <form class="create-password" action="/new_password">
+          <button type="Submit">Create password</button>
+        </form>
     </div>
     <!-- <div class="content"> -->
     <main>
       <table class="table">
-        <div class="password-box">
-          <button class="password-button"></button>
+        <table class="table">
+          <display class="view_password_button"></display>
+          <button data-id="<%= user %>" id='view_password_button'>
+          </button>
+      </table>
         </div>
       </table>
     </main>
