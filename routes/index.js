@@ -40,7 +40,7 @@ router.get("/passwords", [authMiddleware({ redirect: '/login' })], (req, res) =>
         user: req.user,
         passwords: passwords
       };
-      return res.render("users", templateVars);
+      return res.render("passwords", templateVars);
     }).catch(err => {
       console.log('error loading /users', err);
     });
@@ -61,12 +61,11 @@ router.get("/passwords/new_password", [authMiddleware({ redirect: '/login' })], 
 
 // Organization Routes
 
-// TODO: Do we need this?
 router.get('/orgs', [authMiddleware({ redirect: '/login' })], (req, res) => {
   const templateVars = {
     user: req.user
   };
-  res.render('orgs', templateVars);
+  res.render('organizations', templateVars);
 });
 
 router.get('/orgs/:orgId/passwords', [authMiddleware({ redirect: '/login' })], (req, res) => {
@@ -80,7 +79,7 @@ router.get('/orgs/:orgId/passwords', [authMiddleware({ redirect: '/login' })], (
             org: data,
             tags: tags
           };
-          return res.render('orgs', templateVars);
+          return res.render('passwords', templateVars);
         });
     }).catch(err => {
       console.log('error loading /users', err);
@@ -98,14 +97,14 @@ router.get('/orgs/:orgId/new_password', [authMiddleware({ redirect: '/login' })]
             org: data,
             passwords: passwords
           };
-          return res.render('orgs', templateVars);
+          return res.render('new_password', templateVars);
         });
     }).catch(err => {
       console.log('error loading /users', err);
     });
 });
 
-router.get('/orgs/:orgId/share_password', [authMiddleware({ redirect: '/login' })], (req, res) => {
+router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' })], (req, res) => {
   const orgId = req.params.orgId;
   return organizations.getOrganizationById(orgId)
     .then(data => {
@@ -113,7 +112,7 @@ router.get('/orgs/:orgId/share_password', [authMiddleware({ redirect: '/login' }
         user: req.user,
         org: data
       };
-      return res.render('share_password', templateVars);
+      return res.render('invites', templateVars);
     }).catch(err => {
       console.log('error loading /users', err);
     });
