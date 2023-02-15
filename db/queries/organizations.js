@@ -150,18 +150,29 @@ const deleteOrganizationTagById = (organizationId, tagId) => {
     });
 };
 
-const inviteUserByEmail = (organizationId, email) => {
-  return getUserByEmail(email).then(res => {
-    console.log(res);
-    const data = res[0];
-    if (data.email === email) {
-      throw new Error("You can not invite yourself into your organization");
-    }
-  
-    return db.query('INSERT INTO invites(user_id, organization_id) VALUES($1, $2) RETURNING *', [res[0].id, organizationId]);
-  }).then(data => {
-    return data.rows;
-  });
+const inviteUserByEmail = async(organizationId, email) => {
+  const user = await getUserByEmail(email);
+  if (user.length === 0) {
+    throw new Error('User not found in database');
+  }
+
+  const userInOrg = await db.query('SELECT id FROM users_organizations WHERE user_id = $1 AND organization_id = $2', [user[0].id, organizationId]);
+  if (userInOrg.rowCount > 0) {
+    throw new Error('User already in org');
+  }
+
+  return db.query('INSERT INTO invites(user_id, organization_id) VALUES($1, $2) RETURNING *', [user[0].id, organizationId])
+    .then(res => res.rows[0])
+    .catch(err => {
+      console.log(err);
+      
+      if (err.code === '23505') {
+        throw new Error('User already invited');
+      }
+
+      throw new Error('Invalid org');
+      
+    });
 };
 
 const inviteUser = (organizationId, userId) => {
