@@ -15,17 +15,9 @@ router.post('/:orgId/invites', (req, res) => {
   const orgId = req.params.orgId;
   const { userEmail } = req.body;
 
-  console.log(userEmail);
-
   return organizationHelper.inviteUserByEmail(orgId, userEmail)
-    .then(rows =>  {
-      console.log('rows: ', rows);
-      return res.json(rows);
-    })
-    .catch(err =>  {
-      console.log('Error (/:orgId/invites)', err);
-      return res.json({ error: err.message });
-    });
+    .then(rows => res.json(rows))
+    .catch(err => res.json({ error: err.message }));
 });
 
 router.delete('/:orgId/invites', (req, res) => {
