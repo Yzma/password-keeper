@@ -116,7 +116,7 @@ router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' })], (re
     .then(data => {
       const templateVars = {
         user: req.user,
-        org: data
+        org: data[0]
       };
       return res.render('invites', templateVars);
     }).catch(err => {

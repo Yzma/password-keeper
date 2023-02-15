@@ -13,11 +13,17 @@ router.get("/:orgId/invites", (req, res) => {
 
 router.post('/:orgId/invites', (req, res) => {
   const orgId = req.params.orgId;
-  const { userId } = req.body;
+  const { userEmail } = req.body;
 
-  return organizationHelper.inviteUser(orgId, userId)
-    .then(rows => res.json(rows))
-    .catch(err => res.json(err));
+  return organizationHelper.inviteUserByEmail(orgId, userEmail)
+    .then(rows =>  {
+      console.log('rows: ', rows);
+      return res.json(rows);
+    })
+    .catch(err =>  {
+      console.log('Error (/:orgId/invites)', err);
+      return res.json({ error: 'User not found' });
+    });
 });
 
 router.delete('/:orgId/invites', (req, res) => {
