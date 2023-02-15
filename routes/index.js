@@ -13,40 +13,61 @@ router.get('/', [authMiddleware()], (req, res) => {
   res.render('index', templateVars);
 });
 
-router.get("/users", [authMiddleware()], (req, res) => {
-  console.log('/users user: ', req.user);
+router.get("/login", [authMiddleware()], (req, res) => {
+  if (req.user) {
+    return res.redirect('/');
+  }
+
+  const templateVars = {
+    user: null
+  };
+  return res.render("login", templateVars);
+});
+
+// User Routes
+
+router.get("/passwords", [authMiddleware({ redirect: '/login' })], (req, res) => {
   const templateVars = {
     user: req.user
   };
   res.render("users", templateVars);
 });
 
-router.get("/login", [authMiddleware()], (req, res) => {
-  const templateVars = {
-    user: req.user
-  };
-  res.render("login", templateVars);
-});
-
-// get to create a new password
-router.get("/new_password", [authMiddleware()], (req, res) => {
+router.get("/passwords/new_password", [authMiddleware({ redirect: '/login' })], (req, res) => {
   const templateVars = {
     user: req.user
   };
   res.render("new_password", templateVars);
 });
 
-router.get('/share_password', [authMiddleware()], (req, res) => {
+// Organization Routes
+
+router.get('/orgs', [authMiddleware({ redirect: '/login' })], (req, res) => {
+  const templateVars = {
+    user: req.user
+  };
+  res.render('orgs', templateVars);
+});
+
+router.get('/orgs/:orgId/passwords', [authMiddleware({ redirect: '/login' })], (req, res) => {
+  const templateVars = {
+    user: req.user
+  };
+  res.render('orgs', templateVars);
+});
+
+router.get('/orgs/:orgId/new_password', [authMiddleware({ redirect: '/login' })], (req, res) => {
+  const templateVars = {
+    user: req.user
+  };
+  res.render('orgs', templateVars);
+});
+
+router.get('/orgs/:orgId/share_password', [authMiddleware({ redirect: '/login' })], (req, res) => {
   const templateVars = {
     user: req.user
   };
   res.render('share_password', templateVars);
 });
 
-router.get('/orgs', [authMiddleware()], (req, res) => {
-  const templateVars = {
-    user: req.user
-  };
-  res.render('orgs', templateVars);
-});
 module.exports = router;
