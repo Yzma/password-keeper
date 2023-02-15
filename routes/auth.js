@@ -33,7 +33,7 @@ router.post("/login", (req, res) => {
         }
 
         req.session.userId = user.id;
-        return res.redirect('/users/passwords');
+        return res.redirect('/passwords');
       });
 
     }).catch((err) => {
@@ -51,7 +51,7 @@ router.post('/register', (req, res) => {
     .then(user => {
 
       req.session.userId = user.id;
-      return res.redirect('/users/passwords');
+      return res.redirect('/passwords');
 
     }).catch((err) => {
       console.log('Error logging in: ', err);
