@@ -7,18 +7,6 @@ const bcrypt = require("bcryptjs");
 
 const authMiddleware = require("../lib/auth-middleware");
 
-
-const userDatabase = {
-};
-app.get("/login", (req, res) => {
-  const userID = req.session.id;
-  if (userID) {
-    res.redirect("/passwords");
-  } else {
-  res.redirect("/login");
-  }
-});
-
 app.get("/login", (req, res) => {
   const templateVars = {
     urls: urlDatabase,
