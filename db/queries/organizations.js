@@ -153,6 +153,11 @@ const deleteOrganizationTagById = (organizationId, tagId) => {
 const inviteUserByEmail = (organizationId, email) => {
   return getUserByEmail(email).then(res => {
     console.log(res);
+    const data = res[0];
+    if (data.email === email) {
+      throw new Error("You can not invite yourself into your organization");
+    }
+  
     return db.query('INSERT INTO invites(user_id, organization_id) VALUES($1, $2) RETURNING *', [res[0].id, organizationId]);
   }).then(data => {
     return data.rows;
