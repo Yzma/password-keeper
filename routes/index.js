@@ -62,10 +62,16 @@ router.get("/passwords/new_password", [authMiddleware({ redirect: '/login' })], 
 // Organization Routes
 
 router.get('/orgs', [authMiddleware({ redirect: '/login' })], (req, res) => {
-  const templateVars = {
-    user: req.user
-  };
-  res.render('organizations', templateVars);
+  return users.getUsersOrganizationsById(req.user.id)
+    .then(data => {
+      const templateVars = {
+        user: req.user,
+        orgs: data
+      };
+      res.render('organizations', templateVars);
+    }).catch(err => {
+      console.log('error loading /users', err);
+    });
 });
 
 router.get('/orgs/:orgId/passwords', [authMiddleware({ redirect: '/login' })], (req, res) => {
