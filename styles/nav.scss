@@ -8,12 +8,12 @@ nav {
   display: flex;
   height: 140px;
   width: 100%;
-  background: #db4f4a;
   color: #ffffff;
   padding: 0 1.5em;
   align-items: center;
   justify-content: space-between;
   transition: top 0.3s;
+  background-image: url(/images/background.png);
 }
 
 .logo {
