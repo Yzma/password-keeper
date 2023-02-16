@@ -8,16 +8,6 @@ const app = express();
 
 // TODO: Change auth-middleware to redirect to login page on routes that are meant to be protected
 
-const userDatabase = {};
-app.get("/login", (req, res) => {
-  const userID = req.session.id;
-  if (userID) {
-    res.redirect("/passwords");
-  } else {
-    res.redirect("/login");
-  }
-});
-
 router.get("/", [authMiddleware()], (req, res) => {
   const templateVars = {
     user: req.user,
@@ -48,6 +38,7 @@ router.get(
         const templateVars = {
           user: req.user,
           passwords: passwords,
+          org: null
         };
         return res.render("passwords", templateVars);
       })
@@ -66,6 +57,7 @@ router.get(
       .then((passwords) => {
         const templateVars = {
           user: req.user,
+          org: null,
           tags: passwords,
         };
         return res.render("new_password", templateVars);
