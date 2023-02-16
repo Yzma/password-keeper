@@ -26,14 +26,8 @@ app.get("/login", (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", validationMiddleware(userSchema), (req, res) => {
   const { email, password } = req.body;
-
-  // TODO: Create util methods to check
-
-  // if (!isValid(email, password)) {
-  //   return res.status(400).json({ error: 'Invalid username or password'});
-  // }
 
   // TODO:
   // Cleanup
