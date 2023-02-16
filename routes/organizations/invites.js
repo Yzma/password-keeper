@@ -1,26 +1,31 @@
 const express = require('express');
 const router  = express.Router();
 
+const ensureOrganizationMember = require('../../lib/ensure-organization-member');
+
 const organizationHelper = require('../../db/queries/organizations');
 
-router.get("/:orgId/invites", (req, res) => {
+router.get("/:orgId/invites", ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   
   return organizationHelper.getOrganizationsPendingInvitesById(orgId)
-    .then(rows => res.json(rows))
+    .then(rows => {
+      console.log('rows: ', rows);
+      return res.json(rows);
+    })
     .catch(err => res.json(err));
 });
 
-router.post('/:orgId/invites', (req, res) => {
+router.post('/:orgId/invites', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
-  const { userId } = req.body;
+  const { userEmail } = req.body;
 
-  return organizationHelper.inviteUser(orgId, userId)
+  return organizationHelper.inviteUserByEmail(orgId, userEmail)
     .then(rows => res.json(rows))
-    .catch(err => res.json(err));
+    .catch(err => res.json({ error: err.message }));
 });
 
-router.delete('/:orgId/invites', (req, res) => {
+router.delete('/:orgId/invites', ensureOrganizationMember(), (req, res) => {
   const orgId = req.params.orgId;
   const { inviteId } = req.body;
 

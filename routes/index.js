@@ -3,7 +3,6 @@ const router = express.Router();
 const users = require("../db/queries/users");
 const organizations = require("../db/queries/organizations");
 const authMiddleware = require("../lib/auth-middleware");
-const app = express();
 
 
 // TODO: Change auth-middleware to redirect to login page on routes that are meant to be protected
@@ -126,31 +125,23 @@ router.get(
           };
           return res.render("new_password", templateVars);
         });
-      })
-      .catch((err) => {
-        console.log("error loading /users", err);
+      }).catch(err => {
+        console.log('error loading /users', err);
       });
-  }
-);
+  });
 
-router.get(
-  "/orgs/:orgId/invites",
-  [authMiddleware({ redirect: "/login" })],
-  (req, res) => {
-    const orgId = req.params.orgId;
-    return organizations
-      .getOrganizationById(orgId)
-      .then((data) => {
-        const templateVars = {
-          user: req.user,
-          org: data,
-        };
-        return res.render("invites", templateVars);
-      })
-      .catch((err) => {
-        console.log("error loading /users", err);
-      });
-  }
-);
+router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' })], (req, res) => {
+  const orgId = req.params.orgId;
+  return organizations.getOrganizationById(orgId)
+    .then(data => {
+      const templateVars = {
+        user: req.user,
+        org: data[0]
+      };
+      return res.render('organization_invites', templateVars);
+    }).catch(err => {
+      console.log('error loading /users', err);
+    });
+});
 
 module.exports = router;

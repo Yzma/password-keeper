@@ -1,0 +1,36 @@
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: auto auto auto;
+  background-color: #a1a2a3;
+  margin-top: 50px;
+
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    font-size: 20px;
+  }
+  
+  button {
+    background-color: #ce3434;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  button:hover {
+    cursor: pointer;
+    background-color: #690808;
+  }
+
+  button:active {
+    background-color: #360404;
+  }
+}
