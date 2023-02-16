@@ -54,6 +54,7 @@ $(document).ready(function() {
 
   const outgoingInvites = $("#outgoing-invites");
   if (invites.length > 0) {
+    outgoingInvites.empty();
     outgoingInvites.removeClass('hidden');
     for (let i of invites) {
       console.log(i);

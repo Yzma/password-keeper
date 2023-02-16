@@ -32,13 +32,14 @@ const renderInvite = (invite) => {
 $(document).ready(function() {
 
   const invites = JSON.parse($("#invites-json").text());
-
-  const outgoingInvites = $("#pending-invites");
+  const pendingInvites = $("#pending-invites");
+ 
   if (invites.length > 0) {
-    outgoingInvites.removeClass('hidden');
+    pendingInvites.empty();
+    pendingInvites.removeClass('hidden');
     for (let i of invites) {
       console.log(i);
-      outgoingInvites.append(renderInvite(i));
+      pendingInvites.append(renderInvite(i));
     }
   }
 });
