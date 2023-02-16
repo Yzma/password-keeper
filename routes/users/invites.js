@@ -12,14 +12,17 @@ router.get("/invites", (req, res) => {
     .catch(err => res.json(err));
 });
 
-// router.patch('/invites', (req, res) => {
-//   const userId = req.session.userID; // TODO: Use auth-middleware to handle this
-//   const { inviteId } = req.body;
+router.patch('/invites', (req, res) => {
+  const userId = req.session.userId;  // TODO: Use auth-middleware to handle this
+  const { inviteId } = req.body;
 
-//   return organizationHelper.addUser(userId, inviteId)
-//     .then(rows => res.json(rows))
-//     .catch(err => res.json(err));
-// });
+  console.log('userId', userId);
+  console.log('inviteId', inviteId);
+
+  return userHelper.acceptInvite(userId, inviteId)
+    .then(rows => res.json(rows))
+    .catch(err => res.json(err));
+});
 
 router.delete('/invites', (req, res) => {
   const userId = req.session.userId; // TODO: Use auth-middleware to handle this
