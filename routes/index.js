@@ -103,7 +103,7 @@ router.get("/orgs", [authMiddleware({ redirect: "/login" })], (req, res) => {
 
 router.get(
   "/orgs/:orgId/passwords",
-  [authMiddleware({ redirect: "/login" }), ensureOrganizationMember({ redirect: '/login' })],
+  [ensureOrganizationMember({ redirect: '/login' }), authMiddleware({ redirect: "/login" })],
   (req, res) => {
     const orgId = req.params.orgId;
     return organizations
@@ -128,7 +128,7 @@ router.get(
 
 router.get(
   "/orgs/:orgId/passwords/new_password",
-  [authMiddleware({ redirect: "/login" }), ensureOrganizationMember({ redirect: '/login' })],
+  [ensureOrganizationMember({ redirect: '/login' }), authMiddleware({ redirect: "/login" })],
   (req, res) => {
     const orgId = req.params.orgId;
     return organizations
@@ -147,7 +147,7 @@ router.get(
       });
   });
 
-router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' }), ensureOrganizationMember({ redirect: '/login' })], (req, res) => {
+router.get('/orgs/:orgId/invites', [ensureOrganizationMember({ redirect: '/login' }), authMiddleware({ redirect: '/login' })], (req, res) => {
   const orgId = req.params.orgId;
   return organizations.getOrganizationById(orgId)
     .then(data => {
