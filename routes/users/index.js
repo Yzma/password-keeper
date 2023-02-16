@@ -1,9 +1,7 @@
-
 const express = require('express');
 const router  = express.Router();
 
 const usersHelper = require('../../db/queries/users');
-
 const invites = require('./invites');
 const passwords = require('./passwords');
 const tags = require('./tags');
