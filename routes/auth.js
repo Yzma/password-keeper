@@ -9,7 +9,6 @@ const bcrypt = require('bcryptjs');
 
 const authMiddleware = require('../lib/auth-middleware');
 
-
 router.post("/login", validationMiddleware(userSchema), (req, res) => {
   const { email, password } = req.body;
 

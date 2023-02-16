@@ -103,13 +103,13 @@ $(document).ready(() => {
 });
 
 ////////////////////////////////////////////////////////////////////////////
-// const userLogin = function(data) {
-//   return $.ajax({
-//     method: 'POST',
-//     url: '/auth/login',
-//     data
-//   });
-// };
+const userLogin = function(data) {
+  return $.ajax({
+    method: 'POST',
+    url: '/auth/login',
+    data
+  });
+};
 
 const userLogout = function() {
   return $.ajax({
@@ -157,7 +157,7 @@ const getUserInfo = function() {
 const generatePassword = function(data) {
   return $.ajax({
     method: 'POST',
-    url: '/api/generate-password',
+    url: '/api/create_password',
     data
   });
 };
