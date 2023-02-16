@@ -25,7 +25,9 @@ const insertOrganization = (ownerId, name) => {
     .then(result => db.query('INSERT INTO organizations(owner_id, org_name) VALUES($1, $2) RETURNING *', [ownerId, name])
       .then(result => {
         return db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [ownerId, result.rows[0].id]);
-      })).then(rows => db.query('COMMIT'))
+      })).then(rows => {
+      return db.query('COMMIT').then(r => rows);
+    })
     .catch(err => {
       console.error('insertOrganization error: ', err);
       return db.query('ROLLBACK');

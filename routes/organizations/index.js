@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 // TODO: POST / - Creates a new organization
 router.post('/', (req, res) => {
   const { orgName } = req.body;
-  const userId = req.session.userID; // TODO: Use auth-middleware to handle this
+  const userId = req.session.userId; // TODO: Use auth-middleware to handle this
 
   if (!userId || !orgName) {
     return res.json({ error: `Invalid userId(${userId}) or orgName(${orgName})` });
