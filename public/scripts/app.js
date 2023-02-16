@@ -29,14 +29,10 @@ $(document).ready(function () {
   $("#view_password_button").click(function (event) {
     if (user.id) {
       for (let data of passwords) {
-        $( ".password-container" ).prepend( `<button>${data.password}</button>` );
-        $( ".password-container" ).prepend( `<button>${data.website_name}</button>` );
-        $(".password-container").prepend('<img id="theImg" src="public\images\amazon-png-logo-vector-6701.png" />');
-        $(".password-container").stop();
+        $( ".password-container" ).prepend( `<p>${data.password}</p>` );
+        $( ".password-container" ).prepend( `<p>${data.website_name}</p>` );
+        $(".password-container").stop(event);                            // ask how to stop this function
       }
-
-      // console.log(passwords);
-      // console.log("#passwords-json", "#user-json");
     } else {
       res.redirect("/passwords");
     }
