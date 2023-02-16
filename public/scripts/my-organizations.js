@@ -1,7 +1,7 @@
 
 const renderOrganization = (org) => {
   const newGridItem = $(`<div class="grid-item">
-    <a href="/orgs/${org.id}/passwords">ID: ${org.org_name}</a><br>
+    <a href="/orgs/${org.id}/passwords">${org.org_name}</a><br>
   </div>`);
   return newGridItem;
 };
