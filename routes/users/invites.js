@@ -1,18 +1,10 @@
 const express = require('express');
 const router  = express.Router();
 
-const cookieParser = require('cookie-parser');
-
-const app = express();
-
-app.use(cookieParser());
-
 const userHelper = require('../../db/queries/users');
 
 router.get("/invites", (req, res) => {
   const userId = req.session.userId; // TODO: Use auth-middleware to handle this
-
-  //Cookie: session=eyJ1c2VySWQiOjZ9; session.sig=xm2jis5qOINmkYVSDyXi4yvIN_k
 
   console.log('userId: ', userId);
   return userHelper.getUsersPendingInvitesById(userId)

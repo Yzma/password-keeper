@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const cookieParser = require("cookie-parser");
 const users = require("../db/queries/users");
 const organizations = require("../db/queries/organizations");
 const authMiddleware = require("../lib/auth-middleware");
 const app = express();
-app.use(cookieParser());
+
 
 // TODO: Change auth-middleware to redirect to login page on routes that are meant to be protected
 
