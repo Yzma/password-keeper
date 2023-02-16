@@ -139,15 +139,25 @@ const acceptInvite = async(userId, inviteId) => {
 
 // TODO: Test this, this was implemented without testing with seed data
 const getUsersOrganizationsById = (userId) => {
-  return db.query(`SELECT organizations.org_name
+  return db.query(`SELECT organizations.*
     FROM organizations
-    LEFT JOIN users_organizations ON users_organizations.organization_id = organizations.id
-    LEFT JOIN users ON users.id = users_organizations.user_id
-    WHERE organizations.owner_id = $1;`, [userId])
+    JOIN users_organizations ON organizations.id = users_organizations.organization_id
+    WHERE users_organizations.user_id = $1;`, [userId])
     .then(data => {
       return data.rows;
     });
 };
+
+// const getUsersOrganizationsById = (userId) => {
+//   return db.query(`SELECT organizations.org_name
+//     FROM organizations
+//     LEFT JOIN users_organizations ON users_organizations.organization_id = organizations.id
+//     LEFT JOIN users ON users.id = users_organizations.user_id
+//     WHERE organizations.owner_id = $1;`, [userId])
+//     .then(data => {
+//       return data.rows;
+//     });
+// };
 
 const deleteInvite = (userId, inviteId) => {
   return db.query('DELETE FROM invites WHERE invites.user_id = $1;', [userId])
