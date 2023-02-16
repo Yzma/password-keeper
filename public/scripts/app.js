@@ -1,7 +1,6 @@
 // Client facing scripts here
 let endpoint = "/new_password";
 
-
 function copyPassword() {
   let copyText = document.getElementById("password");
   copyText.select();
@@ -28,12 +27,10 @@ $(document).ready(function () {
   const passwords = JSON.parse($("#passwords-json").text());
   console.log("view TEXT", $("#view_password_button"));
   $("#view_password_button").click(function () {
+    console.log("showing");
+    $(".password").toggleClass("hide");
+    console.log($(".password"));
     if (user.id) {
-      for (let data of passwords) {
-        $( ".password-container" ).prepend( `<p>${data.password}</p>` );
-        $( ".password-container" ).prepend( `<p>${data.website_name}</p>` );
-      }
-      $("#view_password_button").off("click");
     } else {
       res.redirect("/passwords");
     }
