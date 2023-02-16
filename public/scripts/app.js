@@ -25,10 +25,10 @@ $(document).ready(function () {
   console.log("document", document);
   const user = JSON.parse($("#user-json").text());
   const passwords = JSON.parse($("#passwords-json").text());
-  console.log("view TEXT", $("#view_password_button"));
-  $("#view_password_button").click(function () {
+  console.log("view TEXT", $(".view_password_button"));
+  $(".view_password_button").click(function () {
     console.log("showing");
-    $(".password").toggleClass("hide");
+    $(this).next().toggleClass("hide");
     console.log($(".password"));
     if (user.id) {
     } else {
@@ -104,6 +104,107 @@ $(document).ready(() => {
 });
 
 ////////////////////////////////////////////////////////////////////////////
+// const generateBoxPassword = (passwords) => {
+//   const newBoxItem = $(`<div class="password-item">
+//     <a href="/passwords/${passwords.id}/passwords">ID: ${passwords.website_name}</a><br>
+//   </div>`);
+//   console.log("Passwords:   :", passwords);
+//   return newBoxItem;
+// };
+
+// $(document).ready(function() {
+//   const newBox = JSON.parse($("#passwords-json").text());
+
+//   organizations.forEach(element => {
+//     $("#passwords").append(renderOrganization(element));
+//   });
+
+//   const newBoxForm = $('#new_password_form');
+
+//   newBoxForm.submit((event) => {
+
+//     // Stop Javascript from submitting the form
+//     event.preventDefault();
+
+//     const boxFormData = newBoxForm.serialize();
+//     console.log(boxFormData);
+
+//     $.post(`/passwords/`, boxFormData)
+//       .then((result) => {
+//         console.log('RESULT: ', result);
+//         window.location.href = `/passwords/${result.rows[0].data.passwords}/passwords`;
+//       }).catch((e) => {
+//         console.error('Error posting new box:', e);
+//       });
+//   });
+// });
+
+////////////////////////////////////////////////////////////////////////////
+
+// const renderBoxPassword = (passwords) => {
+//   const newBoxItem = $(`<div class="password-item">
+//     <a>ID: ${passwords.id}</a><br>
+//     <a>User ID: ${passwords.website_name}</a><br>
+//     <button>Open</button>
+//   </div>`);
+
+//   newBoxItem.click('button', () => {
+
+//     const passwordItem = passwords.id;
+//     $.ajax({
+//       url: `/passwords/${passwords.id}`,
+//       type: 'DELETE',
+//       success: (result) => {
+//         console.log('result', result);
+//         $(newBoxItem).remove();
+//       },
+//       error: (e) => {
+//         console.log('failed to delete', e);
+//       },
+//       data: {
+//         passwordId: passwordId
+//       }
+//     });
+//   });
+//   return newBoxItem;
+// };
+
+// $(document).ready(function() {
+
+//   const passwords = JSON.parse($("#passwords-json").text());
+//   const website_name = JSON.parse($("#website_name-json").text());
+//   const passwordForm = $('#passwordForm-form');
+
+//   passwordForm.submit((event) => {
+
+//     // Stop Javascript from submitting the form
+//     event.preventDefault();
+
+//     const userPasswordData = passwordForm.serialize();
+//     console.log(userPasswordData);
+
+//     $.post(`/passwords/${passwords.id}`, userPasswordData)
+//       .then((result) => {
+//         console.log('RESULT: ', result);
+//         // TODO: This doesn't return the correct data to render, we would need to fetch from the invites table again
+//         // $("#outgoing-invites").append(renderInvite(org, result));
+//       }).catch((e) => {
+//         console.error('Error creating box:', e);
+//       });
+//   });
+
+//   const createBoxPassword = $("#createBoxPassword");
+//   if (passwords.length > 0) {
+//     createBoxPassword.empty();
+//     createBoxPassword.removeClass('hidden');
+//     for (let i of passwords) {
+//       console.log(i);
+//       createBoxPassword.append(renderBoxPassword(passwords, i));
+//     }
+//   }
+
+//   console.log(passwords);
+// });
 
 const userLogout = function () {
   return $.ajax({
