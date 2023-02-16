@@ -3,7 +3,7 @@ const router = express.Router();
 const users = require("../db/queries/users");
 const organizations = require("../db/queries/organizations");
 const authMiddleware = require("../lib/auth-middleware");
-
+const ensureOrganizationMember = require("../lib/ensure-organization-member");
 
 // TODO: Change auth-middleware to redirect to login page on routes that are meant to be protected
 
@@ -16,7 +16,7 @@ router.get("/", [authMiddleware()], (req, res) => {
 
 router.get("/login", [authMiddleware()], (req, res) => {
   if (req.user) {
-    return res.redirect("/login");
+    return res.redirect("/passwords");
   }
   const templateVars = {
     user: null,
@@ -103,7 +103,7 @@ router.get("/orgs", [authMiddleware({ redirect: "/login" })], (req, res) => {
 
 router.get(
   "/orgs/:orgId/passwords",
-  [authMiddleware({ redirect: "/login" })],
+  [authMiddleware({ redirect: "/login" }), ensureOrganizationMember({ redirect: '/login' })],
   (req, res) => {
     const orgId = req.params.orgId;
     return organizations
@@ -128,7 +128,7 @@ router.get(
 
 router.get(
   "/orgs/:orgId/passwords/new_password",
-  [authMiddleware({ redirect: "/login" })],
+  [authMiddleware({ redirect: "/login" }), ensureOrganizationMember({ redirect: '/login' })],
   (req, res) => {
     const orgId = req.params.orgId;
     return organizations
@@ -147,7 +147,7 @@ router.get(
       });
   });
 
-router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' })], (req, res) => {
+router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' }), ensureOrganizationMember({ redirect: '/login' })], (req, res) => {
   const orgId = req.params.orgId;
   return organizations.getOrganizationById(orgId)
     .then(data => {
