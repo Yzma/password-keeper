@@ -83,7 +83,51 @@ const getOrganizationsPasswordsById = (organizationId) => {
     });
 };
 
-const insertPassword = (organizationId, websiteName, username, password, tagId) => {
+const insertPassword = async(organizationId, websiteName, username, password, tagName) => {
+  const tag = await getOrganizationTagByName(organizationId, tagName);
+  console.log('tag: ', tag);
+
+  let tagIdToInsert;
+  if (tag.length === 0) {
+    const createTag = await db.query('INSERT INTO organization_password_tags(organization_id, name) VALUES($1, $2) RETURNING *', [organizationId, tagName]);
+    console.log('createTag: ', createTag);
+    tagIdToInsert = createTag.rows[0].id;
+  } else {
+    tagIdToInsert = tag[0].id;
+  }
+
+  console.log('tagIdToInsert', tagIdToInsert);
+
+  return db.query('INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *', [websiteName, username, password, organizationId, tagIdToInsert])
+    .then(res => res.rows[0])
+    .catch(err => {
+      console.log(err);
+      
+      if (err.code === '23505') {
+        throw new Error('User already invited');
+      }
+
+      throw new Error('Invalid org');
+      
+    });
+};
+
+const getOrganizationTagById = (organizationId, tagId) => {
+  return db.query(`SELECT * FROM organization_password_tags WHERE organization_id = $1 AND id = $2;`, [organizationId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const getOrganizationTagByName = (organizationId, tagName) => {
+  return db.query(`SELECT * FROM organization_password_tags WHERE organization_id = $1 AND name = $2;`, [organizationId, tagName])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+
+const insertPassword_old = (organizationId, websiteName, username, password, tagId) => {
   return db.query(`INSERT INTO organization_passwords(website_name, username, password, organization_id, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *;`, [websiteName, username, password, organizationId, tagId])
     .then(data => {
       return data.rows;

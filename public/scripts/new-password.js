@@ -2,6 +2,9 @@
 $(document).ready(function() {
 
   const tags = JSON.parse($("#tags-json").text());
+  const org = $("#org-json").length > 0 ? JSON.parse($("#org-json").text())[0] : undefined;
+
+  console.log(org);
 
   tags.forEach(element => {
     $('#tags-list').append($(`<option>${element.name}</option>`)
@@ -17,10 +20,10 @@ $(document).ready(function() {
     const createPasswordData = createPasswordForm.serialize();
     console.log(createPasswordForm);
 
-    $.post(`/users/passwords`, createPasswordData)
+    $.post(org ? `/organizations/${org.id}/passwords` : `/users/passwords`, createPasswordData)
       .then((result) => {
         console.log('RESULT creating password:', result);
-        window.location.href = "/passwords"; // TODO: Cheange to orgs/1/password when org
+        window.location.href = org ? `/orgs/${org.id}/passwords` : `/passwords`;
       }).catch((e) => {
         console.error('Error creating password:', e);
       });
