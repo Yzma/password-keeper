@@ -1,13 +1,4 @@
 
-const fetchOrganizationOutgoingInvites = (org, callback) => {
-  $.get(`/organizations/${org.id}/invites`)
-    .then((result) => {
-      callback(null, result);
-    }).catch((e) => {
-      callback(e, null);
-    });
-};
-
 const renderInvite = (org, invite) => {
   const newGridItem = $(`<div class="grid-item">
     <a>ID: ${invite.id}</a><br>
@@ -40,6 +31,7 @@ const renderInvite = (org, invite) => {
 $(document).ready(function() {
 
   const org = JSON.parse($("#org-json").text());
+  const invites = JSON.parse($("#invites-json").text());
   const inviteUserForm = $('#invite-user-form');
 
   inviteUserForm.submit((event) => {
@@ -60,23 +52,14 @@ $(document).ready(function() {
       });
   });
 
-  fetchOrganizationOutgoingInvites(org, (error, result) => {
-    if (error) {
-      console.log('error loading pending invites', error);
-      return;
+  const outgoingInvites = $("#outgoing-invites");
+  if (invites.length > 0) {
+    outgoingInvites.removeClass('hidden');
+    for (let i of invites) {
+      console.log(i);
+      outgoingInvites.append(renderInvite(org, i));
     }
-
-    console.log('loaded: ', result);
-
-    const outgoingInvites = $("#outgoing-invites");
-    if (result.length > 0) {
-      outgoingInvites.removeClass('hidden');
-      for (let i of result) {
-        console.log(i);
-        outgoingInvites.append(renderInvite(org, i));
-      }
-    }
-  });
+  }
 
   console.log(org);
 });
