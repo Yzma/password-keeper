@@ -8,7 +8,7 @@ const renderInvite = (invite) => {
     <button id="accept">Accept Invite</button>
   </div>`);
 
-  newGridItem.click('button', () => {
+  newGridItem.find('#decline').click(() => {
     
     const inviteId = invite.id;
     $.ajax({
@@ -16,7 +16,26 @@ const renderInvite = (invite) => {
       type: 'DELETE',
       success: (result) => {
         console.log('result', result);
-        $(newGridItem).remove();
+        // $(newGridItem).remove();
+      },
+      error: (e) => {
+        console.log('failed to delete', e);
+      },
+      data: {
+        inviteId: inviteId
+      }
+    });
+  });
+
+  newGridItem.find('#accept').click(() => {
+    
+    const inviteId = invite.id;
+    $.ajax({
+      url: `/users/invites`,
+      type: 'PATCH',
+      success: (result) => {
+        console.log('result', result);
+        //$(newGridItem).remove();
       },
       error: (e) => {
         console.log('failed to delete', e);

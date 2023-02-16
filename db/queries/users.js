@@ -91,6 +91,17 @@ const updatePassword = (userId, passwordId, websiteName, username, password, tag
 };
 
 
+const acceptInvite = async(userId, inviteId) => {
+  const wasInvited = await db.query('SELECT * FROM invites WHERE user_id = $1 AND id = $2;', [userId, inviteId]);
+  console.log(wasInvited.rows);
+  if (wasInvited.rowCount > 0) {
+    await db.query('DELETE FROM invites WHERE id = $1;', [inviteId]);
+    return await db.query('INSERT INTO users_organizations(user_id, organization_id) VALUES($1, $2) RETURNING *', [userId, wasInvited.rows[0].organization_id]);
+  }
+
+  throw new Error('User wasnt invited');
+};
+
 // TODO: Test this, this was implemented without testing with seed data
 const getUsersOrganizationsById = (userId) => {
   return db.query(`SELECT organizations.org_name
@@ -161,5 +172,6 @@ module.exports = {
   createUserTag,
   deleteUserTagById,
   deleteUserTagByName,
-  deleteInvite
+  deleteInvite,
+  acceptInvite
 };
