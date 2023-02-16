@@ -48,6 +48,25 @@ router.get(
 );
 
 router.get(
+  "/invites",
+  [authMiddleware({ redirect: "/login" })],
+  (req, res) => {
+    return users
+      .getUsersPendingInvitesById(req.user.id)
+      .then((invites) => {
+        const templateVars = {
+          user: req.user,
+          invites: invites
+        };
+        return res.render("user_invites", templateVars);
+      })
+      .catch((err) => {
+        console.log("error loading /users", err);
+      });
+  }
+);
+
+router.get(
   "/passwords/new_password",
   [authMiddleware({ redirect: "/login" })],
   (req, res) => {
@@ -134,11 +153,15 @@ router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' })], (re
   const orgId = req.params.orgId;
   return organizations.getOrganizationById(orgId)
     .then(data => {
-      const templateVars = {
-        user: req.user,
-        org: data[0]
-      };
-      return res.render('organization_invites', templateVars);
+      return organizations.getOrganizationsPendingInvitesById(data[0].id)
+        .then(invites => {
+          const templateVars = {
+            user: req.user,
+            org: data[0],
+            invites: invites
+          };
+          return res.render('organization_invites', templateVars);
+        });
     }).catch(err => {
       console.log('error loading /users', err);
     });
