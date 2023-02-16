@@ -13,7 +13,6 @@ $(document).ready(function () {
   $("#copy_password_button").click(copyPassword);
 });
 
-
 function viewPassword() {
   let viewText = document.getElementById("password");
   viewText.select();
@@ -24,17 +23,25 @@ function viewPassword() {
 
 $(document).ready(function () {
   console.log("document", document);
+  const user = JSON.parse($("#user-json").text());
+  const passwords = JSON.parse($("#passwords-json").text());
   console.log("view TEXT", $("#view_password_button"));
   $("#view_password_button").click(function (event) {
-    alert(
-      "Handler for .click() called.",
-      $("#view_password_button").data("id")
-    );
+    if (user.id) {
+      for (let data of passwords) {
+        $( ".password-container" ).prepend( `<button>${data.password}</button>` );
+        $( ".password-container" ).prepend( `<button>${data.website_name}</button>` );
+        $(".password-container").prepend('<img id="theImg" src="public\images\amazon-png-logo-vector-6701.png" />');
+        $(".password-container").stop();
+      }
+
+      // console.log(passwords);
+      // console.log("#passwords-json", "#user-json");
+    } else {
+      res.redirect("/passwords");
+    }
   });
 });
-
-
-
 
 ///////////////// CREATE NEW TAG //////////////////////////////////////////////////
 
@@ -46,7 +53,7 @@ $(document).ready(() => {
     });
   };
 
-  $("form").on("submit", function (e) {
+  $("#tag-options").on("submit", function (e) {
     e.preventDefault();
     $(this).find("p").hide().slideDown("slow");
     const characTextarea = $(this).find("textarea").val().length;
@@ -111,73 +118,73 @@ $(document).ready(() => {
 //   });
 // };
 
-const userLogout = function() {
+const userLogout = function () {
   return $.ajax({
-    method: 'POST',
-    url: '/auth/logout'
+    method: "POST",
+    url: "/auth/logout",
   });
 };
 
-const userRegistration = function(data) {
+const userRegistration = function (data) {
   return $.ajax({
-    method: 'POST',
-    url: '/auth/register',
-    data
+    method: "POST",
+    url: "/auth/register",
+    data,
   });
 };
 
-const getUserOrgs = function() {
+const getUserOrgs = function () {
   return $.ajax({
-    url: '/users/organizations'
+    url: "/users/organizations",
   });
 };
 
-const joinOrg = function(data) {
+const joinOrg = function (data) {
   return $.ajax({
-    method: 'POST',
-    url: '/users/invites',
-    data
+    method: "POST",
+    url: "/users/invites",
+    data,
   });
 };
 
-const orgRegistration = function(data) {
+const orgRegistration = function (data) {
   return $.ajax({
-    method: 'POST',
-    url: '/organizations/register',
-    data
+    method: "POST",
+    url: "/organizations/register",
+    data,
   });
 };
 
-const getUserInfo = function() {
+const getUserInfo = function () {
   return $.ajax({
-    url: '/api/user'
+    url: "/api/user",
   });
 };
 
-const generatePassword = function(data) {
+const generatePassword = function (data) {
   return $.ajax({
-    method: 'POST',
-    url: '/api/generate-password',
-    data
+    method: "POST",
+    url: "/api/generate-password",
+    data,
   });
 };
 
-const getOrgInfo = function() {
+const getOrgInfo = function () {
   return $.ajax({
-    url: '/api/organization'
+    url: "/api/organization",
   });
 };
 
-const getUsersInOrg = function() {
+const getUsersInOrg = function () {
   return $.ajax({
-    url: '/api/manage'
+    url: "/api/manage",
   });
 };
 
-const removeUserFromOrg = function(data) {
+const removeUserFromOrg = function (data) {
   return $.ajax({
-    method: 'DELETE',
-    url: '/api/manage',
-    data
+    method: "DELETE",
+    url: "/api/manage",
+    data,
   });
 };

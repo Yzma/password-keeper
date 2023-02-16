@@ -28,8 +28,8 @@
 <body>
 
   <%- include('partials/_header', { user: user }) %>
-  <a><%= JSON.stringify(user) %></a>
-  <a><%= JSON.stringify(org) %></a>
+  <%= JSON.stringify(user) %>
+
 <main>
   <!-- New password section -->
   <section class="create_organizations">

@@ -28,9 +28,8 @@ router.get("/", [authMiddleware()], (req, res) => {
 
 router.get("/login", [authMiddleware()], (req, res) => {
   if (req.user) {
-    return res.redirect("/");
+    return res.redirect("/login");
   }
-
   const templateVars = {
     user: null,
   };
