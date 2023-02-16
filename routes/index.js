@@ -1,23 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const cookieParser = require("cookie-parser");
 const users = require("../db/queries/users");
 const organizations = require("../db/queries/organizations");
 const authMiddleware = require("../lib/auth-middleware");
-const app = express();
-app.use(cookieParser());
+
 
 // TODO: Change auth-middleware to redirect to login page on routes that are meant to be protected
-
-const userDatabase = {};
-app.get("/login", (req, res) => {
-  const userID = req.session.id;
-  if (userID) {
-    res.redirect("/passwords");
-  } else {
-    res.redirect("/login");
-  }
-});
 
 router.get("/", [authMiddleware()], (req, res) => {
   const templateVars = {
@@ -48,8 +36,28 @@ router.get(
         const templateVars = {
           user: req.user,
           passwords: passwords,
+          org: null
         };
         return res.render("passwords", templateVars);
+      })
+      .catch((err) => {
+        console.log("error loading /users", err);
+      });
+  }
+);
+
+router.get(
+  "/invites",
+  [authMiddleware({ redirect: "/login" })],
+  (req, res) => {
+    return users
+      .getUsersPendingInvitesById(req.user.id)
+      .then((invites) => {
+        const templateVars = {
+          user: req.user,
+          invites: invites
+        };
+        return res.render("user_invites", templateVars);
       })
       .catch((err) => {
         console.log("error loading /users", err);
@@ -66,6 +74,7 @@ router.get(
       .then((passwords) => {
         const templateVars = {
           user: req.user,
+          org: null,
           tags: passwords,
         };
         return res.render("new_password", templateVars);
@@ -134,31 +143,27 @@ router.get(
           };
           return res.render("new_password", templateVars);
         });
-      })
-      .catch((err) => {
-        console.log("error loading /users", err);
+      }).catch(err => {
+        console.log('error loading /users', err);
       });
-  }
-);
+  });
 
-router.get(
-  "/orgs/:orgId/invites",
-  [authMiddleware({ redirect: "/login" })],
-  (req, res) => {
-    const orgId = req.params.orgId;
-    return organizations
-      .getOrganizationById(orgId)
-      .then((data) => {
-        const templateVars = {
-          user: req.user,
-          org: data,
-        };
-        return res.render("invites", templateVars);
-      })
-      .catch((err) => {
-        console.log("error loading /users", err);
-      });
-  }
-);
+router.get('/orgs/:orgId/invites', [authMiddleware({ redirect: '/login' })], (req, res) => {
+  const orgId = req.params.orgId;
+  return organizations.getOrganizationById(orgId)
+    .then(data => {
+      return organizations.getOrganizationsPendingInvitesById(data[0].id)
+        .then(invites => {
+          const templateVars = {
+            user: req.user,
+            org: data[0],
+            invites: invites
+          };
+          return res.render('organization_invites', templateVars);
+        });
+    }).catch(err => {
+      console.log('error loading /users', err);
+    });
+});
 
 module.exports = router;

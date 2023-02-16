@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta Information -->
+  <title>Invites</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/users.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/new_password.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+  <link rel="stylesheet" href="/styles/invites.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/organization-invites.js"></script>
+</head>
+
+<body>
+  <a id="org-json" class="hidden"><%- JSON.stringify(org) %></a>
+  <a id="invites-json" class="hidden"><%- JSON.stringify(invites) %></a>
+  <%- include('partials/_header', { user: user }) %>
+
+    <main>
+      <!-- New password section -->
+      <section class="invite_user">
+        <div class="w3-display-middle"></div>
+        <h2>Invite user</h2>
+      </section>
+      <section class="add user" id="add_user"></section>
+      <form id="invite-user-form" class="add user" method="POST" action="/users/orgs">
+        Add new user:<br>
+        <input type="text" name="userEmail" placeholder="New user id" required><br><br>
+        <button type="submit">Invite</button>
+      </form>
+      </section>
+    </main>
+
+    <div id="outgoing-invites" class="grid-container"></div>
+</body>
+
+</html>

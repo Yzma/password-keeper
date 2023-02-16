@@ -1,5 +1,6 @@
 
 const db = require('../connection');
+const { getUserByEmail } = require('./users');
 
 const getOrganizations = () => {
   return db.query('SELECT * FROM organizations;')
@@ -149,6 +150,31 @@ const deleteOrganizationTagById = (organizationId, tagId) => {
     });
 };
 
+const inviteUserByEmail = async(organizationId, email) => {
+  const user = await getUserByEmail(email);
+  if (user.length === 0) {
+    throw new Error('User not found in database');
+  }
+
+  const userInOrg = await db.query('SELECT id FROM users_organizations WHERE user_id = $1 AND organization_id = $2', [user[0].id, organizationId]);
+  if (userInOrg.rowCount > 0) {
+    throw new Error('User already in org');
+  }
+
+  return db.query('INSERT INTO invites(user_id, organization_id) VALUES($1, $2) RETURNING *', [user[0].id, organizationId])
+    .then(res => res.rows[0])
+    .catch(err => {
+      console.log(err);
+      
+      if (err.code === '23505') {
+        throw new Error('User already invited');
+      }
+
+      throw new Error('Invalid org');
+      
+    });
+};
+
 const inviteUser = (organizationId, userId) => {
   return db.query('INSERT INTO invites(user_id, organizationId) VALUES($1, $2) RETURNING *', [userId, organizationId])
     .then(data => {
@@ -164,7 +190,10 @@ const deleteInvite = (organizationId, inviteId) => {
 };
 
 const getOrganizationsPendingInvitesById = (organizationId) => {
-  return db.query('SELECT * FROM invites WHERE invites.organization_id = $1;', [organizationId])
+  return db.query(`SELECT invites.*, users.email, users.id AS user_id
+    FROM invites
+    JOIN users ON invites.user_id = users.id
+    WHERE invites.organization_id = $1;`, [organizationId])
     .then(data => {
       return data.rows;
     });
@@ -195,6 +224,7 @@ module.exports = {
   deleteOrganizationTagByName,
   deleteOrganizationTagById,
   getOrganizationsUsersById,
+  inviteUserByEmail,
   inviteUser,
   deleteInvite,
   getOrganizationsPendingInvitesById

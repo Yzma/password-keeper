@@ -31,8 +31,8 @@ $(document).ready(function () {
       for (let data of passwords) {
         $( ".password-container" ).prepend( `<p>${data.password}</p>` );
         $( ".password-container" ).prepend( `<p>${data.website_name}</p>` );
-        $(".password-container").stop(event);                            // ask how to stop this function
       }
+      $("#view_password_button").off("click"); 
     } else {
       res.redirect("/passwords");
     }

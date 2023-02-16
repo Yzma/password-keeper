@@ -1,14 +1,10 @@
 const express = require('express');
 const router  = express.Router();
-const cookieParser = require('cookie-parser');
 
 const usersHelper = require('../../db/queries/users');
 const invites = require('./invites');
 const passwords = require('./passwords');
-const tags = require('./tags')
-
-const app = express();
-app.use(cookieParser());
+const tags = require('./tags');
 
 router.get("/", (req, res) => {
   return usersHelper.getUsers()

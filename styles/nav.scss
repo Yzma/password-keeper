@@ -3,7 +3,6 @@ header {
   width: 100%;
 }
 
-
 nav {
   display: flex;
   height: 140px;
@@ -14,6 +13,12 @@ nav {
   justify-content: space-between;
   transition: top 0.3s;
   background-image: url(/images/background.png);
+
+  a {
+    font-weight: bold;
+    font-size: 24px;
+    color: rgb(207, 153, 35);
+  }
 }
 
 .logo {
