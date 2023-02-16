@@ -39,7 +39,7 @@ router.get(
           passwords: passwords,
           org: null
         };
-        return res.render("passwords", templateVars);
+        return res.render("user-passwords", templateVars);
       })
       .catch((err) => {
         console.log("error loading /users", err);
@@ -114,12 +114,13 @@ router.get(
         return organizations
           .getOrganizationsPasswordsById(orgId)
           .then((passwords) => {
+            console.log(passwords);
             const templateVars = {
               user: req.user,
               org: data,
               passwords: passwords,
             };
-            return res.render("passwords", templateVars);
+            return res.render("", templateVars); // TODO: Change this
           });
       })
       .catch((err) => {
