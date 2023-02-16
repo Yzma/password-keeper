@@ -1,30 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const app = express();
+const { userSchema } = require('../lib/validation-schemas');
+const { validationMiddleware } = require('../lib/validation-middleware');
 
-const users = require("../db/queries/users");
-const bcrypt = require("bcryptjs");
+const express = require('express');
+const router  = express.Router();
 
-const authMiddleware = require("../lib/auth-middleware");
+const users = require('../db/queries/users');
+const bcrypt = require('bcryptjs');
 
-app.get("/login", (req, res) => {
-  const templateVars = {
-    urls: urlDatabase,
-    user: usersDatabase[req.session.id],
-  };
-  const userID = req.session.id;
-  const user = urlsForUser(userID, urlDatabase);
+const authMiddleware = require('../lib/auth-middleware');
 
-  if (!userID) {
-    return res.redirect("/login");
-  } else {
-    const templateVars = {
-      urls: urlDatabase,
-      user: usersDatabase[req.session.id],
-    };
-    return res.render("/index", templateVars);
-  }
-});
 
 router.post("/login", validationMiddleware(userSchema), (req, res) => {
   const { email, password } = req.body;
@@ -55,7 +39,8 @@ router.post("/login", validationMiddleware(userSchema), (req, res) => {
     });
 });
 
-router.post("/register", (req, res) => {
+router.post('/register', validationMiddleware(userSchema), (req, res) => {
+
   const { email, password } = req.body;
   console.log("EMAIL:", email);
   console.log(password);
@@ -73,7 +58,8 @@ router.post("/register", (req, res) => {
     });
 });
 
-router.post("/logout", (req, res) => {
+router.post('/logout', (req, res) => {
+
   req.session.userId = null;
   return res.redirect("/login");
 });
