@@ -62,9 +62,44 @@ const getUsersPasswordsById = (userId) => {
     });
 };
 
-// TODO: These functions are duplicate, move them into a seperate function and call the same one for both users and organizations
-const insertPassword = (userId, websiteName, username, password, tagId) => {
-  return db.query(`INSERT INTO user_passwords(website_name, username, password, userId, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *;`, [websiteName, username, password, userId, tagId])
+const insertPassword = async(userId, websiteName, username, password, tagName) => {
+  const tag = await getUserTagByName(userId, tagName);
+  console.log('tag: ', tag);
+
+  let tagIdToInsert;
+  if (tag.length === 0) {
+    const createTag = await db.query('INSERT INTO user_password_tags(user_id, name) VALUES($1, $2) RETURNING *', [userId, tagName]);
+    console.log('createTag: ', createTag);
+    tagIdToInsert = createTag.rows[0].id;
+  } else {
+    tagIdToInsert = tag[0].id;
+  }
+
+  console.log('tagIdToInsert', tagIdToInsert);
+
+  return db.query('INSERT INTO user_passwords(website_name, username, password, user_id, tag_id) VALUES($1, $2, $3, $4, $5) RETURNING *', [websiteName, username, password, userId, tagIdToInsert])
+    .then(res => res.rows[0])
+    .catch(err => {
+      console.log(err);
+      
+      if (err.code === '23505') {
+        throw new Error('User already invited');
+      }
+
+      throw new Error('Invalid org');
+      
+    });
+};
+
+const getUserTagById = (userId, tagId) => {
+  return db.query(`SELECT * FROM user_password_tags WHERE user_id = $1 AND id = $2;`, [userId, tagId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const getUserTagByName = (userId, tagName) => {
+  return db.query(`SELECT * FROM user_password_tags WHERE user_id = $1 AND name = $2;`, [userId, tagName])
     .then(data => {
       return data.rows;
     });
@@ -161,5 +196,7 @@ module.exports = {
   createUserTag,
   deleteUserTagById,
   deleteUserTagByName,
-  deleteInvite
+  deleteInvite,
+  getUserTagById,
+  getUserTagByName
 };
