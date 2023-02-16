@@ -86,7 +86,7 @@ $(document).ready(function() {
 
 class PasswordGenerator {
 
-  constructor(options = defaultOptions) {
+  constructor(options) {
     this.setOptions(options);
   }
 
@@ -120,9 +120,6 @@ class PasswordGenerator {
     this.cachedPasswordArray = result;
   }
 
-  // TODO:
-  // 1: Cleanup
-  // 2: Cache current settings array instead of generating a new one each time a password is generated
   generatePassword() {
 
     let password = '';

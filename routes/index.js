@@ -74,7 +74,6 @@ router.get(
       .then((passwords) => {
         const templateVars = {
           user: req.user,
-          org: null,
           tags: passwords,
         };
         return res.render("new_password", templateVars);
