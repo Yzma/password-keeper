@@ -7,23 +7,46 @@ nav {
   display: flex;
   height: 140px;
   width: 100%;
-  color: #ffffff;
+  color: #e7e5e5;
   padding: 0 1.5em;
   align-items: center;
   justify-content: space-between;
   transition: top 0.3s;
-  background-image: url(/images/background.png);
+  background-color: #2563eb;
 
   a {
     font-weight: bold;
-    font-size: 24px;
-    color: rgb(207, 153, 35);
+    font-size: large;
+    color: #e7e5e5;
   }
 }
 
-.logo {
-  margin-bottom: 50px;
-  transform: scale(0.9);
+.user {
+  font-size: medium;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+
+  a {
+    padding-right: 10px;
+  }
+
+  button {
+    font-size: medium;
+
+    width: 100px;
+    height: 20px;
+    background: #e7e5e5;
+    color: #000;
+   
+    border: 0;
+    text-decoration: none;
+    line-height: 17px;
+  }
+
+  button:hover {
+    background: #bebbbb;
+  }
 }
 
 

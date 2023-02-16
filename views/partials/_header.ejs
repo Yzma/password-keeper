@@ -9,9 +9,13 @@
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 
-    <button type="Submit">Logout</button>
-    <div class="picture">
-      <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
+    <div class="user">
+      <% if(user){ %>
+        <a><%= user.email %></a>
+        <button>Log Out</button>
+      <% } else { %>
+        <a class="nav-item nav-link" href="/users"></a>
+      <% } %>
     </div>
   </nav>
 
