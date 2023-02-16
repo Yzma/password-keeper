@@ -9,6 +9,17 @@ main {
   align-items: center;
 }
 
+.w3-display-middle {
+  margin-top: 100px;
+}
+
+.new_organization {
+  display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
 .wrapper {
   padding: 50px;
   display: grid;
@@ -27,12 +38,14 @@ main {
 }
 
 .grid-container {
+    display: flex;
+  justify-content: center;
   padding: 60px 10px;
   display: grid;
   grid-template-columns: auto auto auto;
   column-gap: 20px;
   row-gap: 20px;
-  
+
   .grid-item {
     background-color: #d4d5d6;
     border: 1px solid rgba(0, 0, 0, 0.8);
@@ -47,6 +60,7 @@ main {
   }
 
   #accept {
+
     background-color: #1f924f;
     border: none;
     color: white;
@@ -56,13 +70,13 @@ main {
     display: inline-block;
     font-size: 16px;
   }
-  
+
   #accept:hover {
     cursor: pointer;
     background-color: #156436;
   }
 
-  #accept::active {
+  #accept:active {
     background-color: #0b4423;
   }
 
@@ -76,7 +90,7 @@ main {
     display: inline-block;
     font-size: 16px;
   }
-  
+
   #decline:hover {
     cursor: pointer;
     background-color: #690808;
