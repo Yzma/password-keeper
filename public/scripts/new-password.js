@@ -25,8 +25,34 @@ $(document).ready(function() {
       });
   });
 
-  const pm = new PasswordGenerator();
+  const options = {
+    lowercase: true,
+    uppercase: true,
+    numbers: true,
+    symbols: false,
+    length: 8
+  };
+
+  const pm = new PasswordGenerator(options);
   const passwordField = $("#password");
+
+  $("#password-length-output").text(`(${pm.options.length})`);
+  $("#lowercase").attr('checked', pm.options.lowercase);
+  $("#uppercase").attr('checked', pm.options.uppercase);
+  $("#numbers").attr('checked', pm.options.numbers);
+  $("#symbols").attr('checked', pm.options.symbols);
+
+  $("#password-checkbox-options").on('change', (e) => {
+    console.log($("#symbols").is(":checked"));
+    pm.setOptions({
+      ...pm.options,
+      lowercase: $("#lowercase").is(":checked"),
+      uppercase: $("#uppercase").is(":checked"),
+      numbers: $("#numbers").is(":checked"),
+      symbols: $("#symbols").is(":checked"),
+    });
+    console.log(pm.options);
+  });
 
   $('#generate-password').click((event) => {
     const pass = pm.generatePassword();
@@ -45,16 +71,14 @@ $(document).ready(function() {
   $("#password-length").on('input', (e) => {
     const passLength = $("#password-length").val();
     $("#password-length-output").text(`(${passLength})`);
+    pm.setOptions({
+      ...pm.options,
+      length: passLength
+    });
   });
 });
 
-const defaultOptions = {
-  uppercase: true,
-  lowercase: true,
-  numbers: true,
-  symbols: true,
-  length: 10
-};
+
 
 class PasswordGenerator {
 
