@@ -8,7 +8,7 @@ const renderInvite = (org, invite) => {
   </div>`);
 
   newGridItem.click('button', () => {
-    
+
     const inviteId = invite.id;
     $.ajax({
       url: `/organizations/${org.id}/invites`,
