@@ -20,6 +20,7 @@ $(document).ready(function() {
     $.post(`/users/passwords`, createPasswordData)
       .then((result) => {
         console.log('RESULT creating password:', result);
+        window.location.href = "/passwords"; // TODO: Cheange to orgs/1/password when org
       }).catch((e) => {
         console.error('Error creating password:', e);
       });
