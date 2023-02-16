@@ -1,3 +1,6 @@
+<a id="user-json" class="hidden">
+  <%= JSON.stringify(user) %>
+</a>
 <header class="header">
   <nav>
     <div class="nav">
@@ -8,22 +11,17 @@
       <input type="text" placeholder="Search.." name="search">
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
-
-    <button type="Submit">Logout</button>
     <div class="picture">
       <img src="\images\PASSWORD-KEEPER_free-file.png" style="width:4em; height:5em;" />
     </div>
+    <% if(user){ %>
+      <h3>Logged: <%= user.email %>
+      </h3>
+      <form action="/auth/logout" method="POST">
+        <button type="submit">Logout</button>
+      </form>
+      <% } else { %>
+        <a class="nav-item nav-link" href="/users"></a>
+        <% } %>
   </nav>
-
-  <% if(user){ %>
-    <h3>Logged: <%= user.email %>
-    </h3>
-    <form action="/auth/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-    <% } else { %>
-      <a class="nav-item nav-link" href="/users"></a>
-      <% } %>
-
-        </nav>
 </header>

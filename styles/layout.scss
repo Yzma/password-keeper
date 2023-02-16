@@ -23,6 +23,8 @@ html {
   display: flex;
   align-items: center;
   margin-left: 10px;
+  border-radius: 12px;
+
 }
 
 .password-box {
@@ -43,9 +45,5 @@ html {
   color: white;
  }
 
-// Inside this button we can put the website address and the icon
-// .view_password_button {
-//   width: 100px;
-//   height: 80px;
-//  }
+
 
