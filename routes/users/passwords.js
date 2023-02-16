@@ -1,12 +1,6 @@
 const express = require('express');
 const router  = express.Router();
 
-const cookieParser = require('cookie-parser');
-
-const app = express();
-
-app.use(cookieParser());
-
 const usersHelper = require('../../db/queries/users');
 
 router.get("/passwords", (req, res) => {
