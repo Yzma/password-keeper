@@ -77,12 +77,10 @@ const getOrganizationById = (organizationId) => {
 // We need to JOIN the table to actually get the tags names instead of just their IDs.
 // Returns the Organizations passwords by the Organization ID
 const getOrganizationsPasswordsById = (organizationId) => {
-  return db.query(`SELECT *
-    FROM organization_passwords
-    WHERE organization_passwords.organization_id = $1;`, [organizationId])
-    .then(data => {
-      return data.rows;
-    });
+  return db.query(`SELECT organization_passwords.*, organization_password_tags.name AS tag_name
+  FROM organization_passwords
+  LEFT JOIN organization_password_tags ON organization_password_tags.id = organization_passwords.organization_id
+  WHERE organization_passwords.organization_id = $1;`, [organizationId]);
 };
 
 const insertPassword = async(organizationId, websiteName, username, password, tagName) => {
