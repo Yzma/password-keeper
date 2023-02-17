@@ -33,6 +33,13 @@ router.patch('/passwords', (req, res) => {
   const userId = req.session.userId; // TODO: Use auth-middleware to handle this
   const { passwordId, websiteName, username, password, tagId } = req.body;
 
+  console.log('patch password');
+  console.log('passwordId', passwordId);
+  console.log('websiteName', websiteName);
+  console.log('username', username);
+  console.log('password', password);
+  console.log('tagId', tagId);
+
   return usersHelper.updatePassword(userId, passwordId, websiteName, username, password, tagId)
     .then(rows => res.json(rows))
     .catch(err => {

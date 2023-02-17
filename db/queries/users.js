@@ -63,6 +63,16 @@ const getUsersPasswordsById = (userId) => {
     });
 };
 
+const getUserPasswordById = (userId, passwordId) => {
+  return db.query(`SELECT user_passwords.*, user_password_tags.name AS tag_name, user_password_tags.id AS tag_id
+  FROM user_passwords
+  JOIN user_password_tags ON user_password_tags.id = user_passwords.tag_id
+  WHERE user_passwords.user_id = $1 AND user_passwords.id = $2;`, [userId, passwordId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const insertPassword = async(userId, websiteName, username, password, tagName) => {
   const tag = await getUserTagByName(userId, tagName);
   console.log('tag: ', tag);
@@ -113,15 +123,31 @@ const deletePassword = (userId, passwordId) => {
     });
 };
 
-const updatePassword = (userId, passwordId, websiteName, username, password, tagId) => {
+const updatePassword = async(userId, passwordId, websiteName, username, password, tagName) => {
+  console.log('TAG NAME ', tagName);
+  const tag = await getUserTagByName(userId, tagName);
+  console.log('tag: ', tag);
+
+  let tagIdToInsert;
+  if (tag.length === 0) {
+    const createTag = await db.query('INSERT INTO user_password_tags(user_id, name) VALUES($1, $2) RETURNING *', [userId, tagName]);
+    console.log('createTag: ', createTag);
+    tagIdToInsert = createTag.rows[0].id;
+  } else {
+    tagIdToInsert = tag[0].id;
+  }
+
+  console.log('tagIdToInsert', tagIdToInsert);
+
   return db.query(`UPDATE user_passwords SET
       website_name = COALESCE(NULLIF($3, E''), website_name),
       username = COALESCE(NULLIF($4, E''), username),
       password = COALESCE(NULLIF($5, E''), password),
       tag_id = COALESCE(CAST(NULLIF($6, E'') AS INTEGER), tag_id)
-    WHERE userId = $1 AND id = $2 RETURNING *;`
-  , [userId, passwordId, websiteName, username, password, tagId])
+    WHERE user_id = $1 AND id = $2 RETURNING *;`
+  , [userId, passwordId, websiteName, username, password, tagIdToInsert])
     .then(data => {
+      console.log('result please', data.rows);
       return data.rows;
     });
 };
@@ -221,5 +247,6 @@ module.exports = {
   deleteInvite,
   acceptInvite,
   getUserTagById,
-  getUserTagByName
+  getUserTagByName,
+  getUserPasswordById
 };

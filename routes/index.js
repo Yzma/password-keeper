@@ -47,6 +47,39 @@ router.get(
 );
 
 router.get(
+  "/passwords/edit_password/:passwordId",
+  [authMiddleware({ redirect: "/login" })],
+  (req, res) => {
+    const passwordId = req.params.passwordId;
+    console.log('req.user.id', req.user.id);
+    console.log('passwordId', passwordId);
+    return users
+      .getUserPasswordById(req.user.id, passwordId)
+      .then((passwords) => {
+
+        if (!passwords || passwords.length === 0) {
+          return res.redirect('/passwords');
+        }
+
+        return users.getAllUserTags(req.user.id).then(tags => {
+          const templateVars = {
+            user: req.user,
+            password: passwords,
+            tags: tags
+          };
+
+          console.log(tags);
+  
+          return res.render("edit_password", templateVars);
+        });
+      })
+      .catch((err) => {
+        console.log("error loading /users", err);
+      });
+  }
+);
+
+router.get(
   "/invites",
   [authMiddleware({ redirect: "/login" })],
   (req, res) => {
