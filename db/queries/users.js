@@ -54,9 +54,10 @@ const getUserByEmail = (email) => {
 // TODO: Come back to this later on once tags are implemented.
 // We need to JOIN the table to actually get the tags names instead of just their IDs.
 const getUsersPasswordsById = (userId) => {
-  return db.query(`SELECT *
-    FROM user_passwords
-    WHERE user_passwords.user_id = $1;`, [userId])
+  return db.query(`SELECT user_passwords.*, user_password_tags.name AS tag_name
+  FROM user_passwords
+  LEFT JOIN user_password_tags ON user_password_tags.id = user_passwords.user_id
+  WHERE user_passwords.user_id = $1;`, [userId])
     .then(data => {
       return data.rows;
     });
